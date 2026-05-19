@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -110,4 +111,61 @@ public class ItemController {
 		return "redirect:/items";
 	}
 
+	// 更新画面表示
+	@GetMapping("/items/{id}/edit")
+	public String edit(@PathVariable Integer id, Model model) {
+		Item item = itemRepository.findById(id).get();
+		model.addAttribute("item", item);
+
+		// 更新画面でもプルダウンでカテゴリIDを選べるようにするため
+		List<Genre> genreList = genreRepository.findAll();
+		model.addAttribute("genres", genreList);
+		return "editItem";
+	}
+
+	@PostMapping("/items/{id}/edit")
+	public String update(
+			// edit.htmlの更新情報をフォームから受ける
+
+			/*
+			 * 復習：PathVariableは引き渡された情報をURLに含めるために使う。
+			 * 情報に応じてリンク分け・整理が可能
+			 * */
+			@PathVariable Integer id, // 主キー（商品ID）を引数で取る
+
+			@RequestParam(defaultValue = "") LocalDate addDate,
+			@RequestParam(defaultValue = "") String itemName,
+			@RequestParam(defaultValue = "") Integer genreId,
+			@RequestParam(defaultValue = "") Integer price,
+			@RequestParam(defaultValue = "") String comment) {
+
+		// 変更された科目IDを使う
+		Genre genre = genreRepository.findById(genreId).get();
+		User user = userRepository.findById(account.getId()).get();
+
+		Item item = itemRepository.findById(id).get();
+
+		item.setAddDate(addDate);
+		item.setItemName(itemName);
+		item.setGenre(genre);
+		item.setUser(user);
+		item.setPrice(price);
+		item.setComment(comment);
+
+		// 更新した情報を保存
+		itemRepository.save(item);
+
+		return "redirect:/items";
+	}
+
+	// 削除処理
+	@PostMapping("/items/{id}/delete")
+	public String delete(@PathVariable Integer id) {
+
+		// 更新した情報を削除
+		// リポジトリ名.deleteByデータベースフィールド名で指定
+		itemRepository.deleteById(id);
+
+		return "redirect:/items";
+	}
 }
