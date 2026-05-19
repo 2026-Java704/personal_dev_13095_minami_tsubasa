@@ -9,4 +9,6 @@ import com.example.demo.entity.Item;
 public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	List<Item> findAllByOrderByAddDate();
+
+	List<Item> findByGenreId(Integer genreId);
 }

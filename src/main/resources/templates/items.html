@@ -8,6 +8,13 @@
 <body>
 	<h1>計上履歴照会</h1>
 	
+	<a href="/items">全項目</a>
+	<br>
+	<a th:each="genre:${genres}"
+       th:href="@{/items(genreId=${genre.id})}"
+       th:text="${genre.genreName}"
+       style="margin-right: 5px;"></a>
+	<br>
 	<a href="/items/add">新規計上</a>
 		<table border="1">
 			<tr>

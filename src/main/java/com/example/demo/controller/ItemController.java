@@ -62,12 +62,40 @@ public class ItemController {
 	 * ここではデータベースの全件表示を行います。
 	 * 
 	 */
+
 	@GetMapping("/items")
-	public String index(Model model) {
+	public String index(
+			@RequestParam(defaultValue = "") Integer genreId,
+			Model model) {
 
-		// まずはItemから全権表示
-		List<Item> itemList = itemRepository.findAllByOrderByAddDate();
+		// 全カテゴリー一覧を取得
+		List<Genre> genreList = genreRepository.findAll();
+		model.addAttribute("genres", genreList);
 
+		// 商品一覧情報の取得
+
+		/*
+		 * 補足：items.htmlのaタグ操作によってここの処理は決まります。
+		 * th:each="category:${categories}"のthymeleaf機能で
+		 * カテゴリデータベース上のカテゴリを全権表示
+		 * 
+		 * ここで、各カテゴリをth:hrefでクリックして下記の処理につながります。
+		 * 
+		 * まず、初期ではItemを空にして置き、
+		 * 下の条件分岐で初めて表示を柔軟にできるようにしています。
+		 * 
+		 * */
+
+		// まずはItemは空にする
+		List<Item> itemList = null;
+		// aタグでカテゴリが選択されていない場合
+		if (genreId == null) {
+			// 全件を表示
+			itemList = itemRepository.findAll();
+		} else {
+			// itemsテーブルをカテゴリーIDを指定して一覧を取得
+			itemList = itemRepository.findByGenreId(genreId);
+		}
 		// itemsに返してHTML上のtableタグ内に返却
 		model.addAttribute("items", itemList);
 
