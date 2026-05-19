@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>CustomerInfo</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+	<header>
+		<h1>ユーザー登録画面</h1>
+	</header>
+	<hr>
+	<main>
+		<hr>
+		<h3>お客様情報</h3>
+		<br> <span th:text="${accountErr}" style="color: red"></span>
+		
+		<form action="/register" method="post">
+			<table border="1">
+				<tr>
+					<th>名前</th>
+					<td>
+						<input type="text" name="name" th:value="${setName}">
+					</td>
+				</tr>
+				<tr>
+					<th>e-mail</th>
+					<td>
+						<input type="text" name="email" th:value="${setEmail}">
+					</td>
+				</tr>
+				<tr>
+					<th>パスワード</th>
+					<td>
+						<input type="text" name="password" th:value="${setPassword}">
+					</td>
+				</tr>
+				<tr>
+				<th>パスワード確認</th>
+					<td>
+						<input type="text" name="passwordConfilm" th:value="${setConfilm}">
+					</td>
+				</tr>
+			</table>
+			<button>登録</button>
+		</form>
+	</main>
+
+</body>
+</html>
