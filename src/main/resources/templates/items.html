@@ -8,6 +8,15 @@
 <body>
 	<h1>計上履歴照会</h1>
 	
+	<!--５月２０日の対応-->
+	<form action="/sort" method="post">
+		<input type="number" name="year">年
+		<input type="number" name="month">月分
+		<button>照会</button>
+	</form>
+	<h2>25000 円</h2>
+	<p>収入の範囲内です</p>
+	
 	<a href="/items">全項目</a>
 	<br>
 	<a th:each="genre:${genres}"
@@ -15,6 +24,7 @@
        th:text="${genre.genreName}"
        style="margin-right: 5px;"></a>
 	<br>
+	
 	<a href="/items/add">新規計上</a>
 		<table border="1">
 			<tr>

@@ -19,11 +19,14 @@ import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.UserRepository;
 
 /*
- * 1. AccountControllerでリダイレクトされたitems.html
- * に対しての処理をお粉ます。
+ * 5/20にやること！
+ * input入力欄から数値入力1~12 年
+ * addDateを使ってfindByで月の範囲（1~31日）を検索
  * 
- * カートに追加ボタン…の処理は、ここではなくCartController.javaで処理されます。
- * @PostMapping("/cart/add")がこの時呼び出されます。
+ * 例： List<Order> findByOrderDateBetween(LocalDateTime start, LocalDateTime end);
+ * 変数はそれぞれinputタグのnameから取る。
+ * 
+ * その範囲のpriceを出す。正と負の値での結果を出す。
  * 
  * */
 
