@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>CustomerInfo</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+	<header>
+		<h1>計上画面</h1>
+	</header>
+	<hr>
+	<main>
+		<hr>
+		<h3>新しい支出情報を入力します。</h3>
+		<br> <span th:text="${inputErr}" style="color: red"></span>
+		
+		<form action="/items/add" method="post">
+			<table border="1">
+				<tr>
+					<th>日付</th>
+					<td>
+						<input type="date" name="addDate" th:value="${setAddDatee}">
+					</td>
+				</tr>
+				<tr>
+					<th>件名</th>
+					<td>
+						<input type="text" name="itemName" th:value="${setEmail}">
+					</td>
+				</tr>
+				<tr>
+					<th>科目</th>
+					<td>
+						<select name="genreId"]>
+							<option th:each="genre:${genres}"
+								th:text="|${genre.id} ${genre.genreName}|"
+								th:value="${genre.id}"></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+				<th>金額</th>
+					<td>
+						<input type="text" name="price" th:value="${setPrice}">
+					</td>
+				</tr>
+				<tr>
+					<th>コメント</th>
+						<td>
+							<input type="text" name="comment" th:value="${setComment}">
+						</td>
+					</tr>
+			</table>
+			<button>登録</button>
+		</form>
+	</main>
+
+</body>
+</html>
