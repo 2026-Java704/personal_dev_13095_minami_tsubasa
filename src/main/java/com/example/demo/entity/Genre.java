@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 public class Genre {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id; // 顧客ID
+	private Integer id; // ジャンルID
 
 	@Column(name = "genre_name")
 	private String genreName; // 名前
@@ -29,4 +29,29 @@ public class Genre {
 
 		this.isIncome = isIncome;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public Integer setId() {
+		return id;
+	}
+
+	public String getGenreName() {
+		return genreName;
+	}
+
+	public void setGenreName(String genreName) {
+		this.genreName = genreName;
+	}
+
+	public boolean isIncome() {
+		return isIncome;
+	}
+
+	public void setIncome(boolean isIncome) {
+		this.isIncome = isIncome;
+	}
+
 }

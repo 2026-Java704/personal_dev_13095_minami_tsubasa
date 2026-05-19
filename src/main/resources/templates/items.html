@@ -2,28 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>商品一覧</title>
+<title>MONEY-ARROWS</title>
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-	<h1>Hello my Spring</h1>
+	<h1>計上履歴照会</h1>
 	
+	<a href="/items/add">新規計上</a>
 	<table border="1">
 			<tr>
 				<th>日付</th>
 				<th>名前</th>
 				<th>科目</th>
-				<th>金額</th>
+				<th>金額(円)</th>
 				<th>コメント</th>
 			</tr>
 			<tr th:each="item:${items}">
 				<!--表の商品へのリンク付けはThymeleafのタグ外書き込みで対応可能-->
 				<td th:text="${item.addDate}"></td>
 				<td th:text="${item.itemName}"></td>
-				<td th:text="${item.genreId}"></td>
+				<td th:text="${item.genre.genreName}"></td>
 				<td th:text="${item.price}"></td>
 				<td th:text="${item.comment}"></td>
 			</tr>
 		</table>
+		
 </body>
 </html>

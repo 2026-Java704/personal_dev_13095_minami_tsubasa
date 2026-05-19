@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.User;
+import com.example.demo.model.Account;
 import com.example.demo.repository.UserRepository;
 
 @Controller
@@ -20,16 +21,18 @@ public class UserController {
 	// セッションに必要な初期化
 	private final UserRepository userRepository;
 	private final HttpSession session;
-	//		private final Account account;
+	private final Account account;
 
 	/* 
 	 * アカウントコントローラクラスのコンストラクタ
 	 * Accountはデータベースに直接関連しないオブジェクトのため
 	 * modelクラスで管理する。
 	*/
-	public UserController(HttpSession session, UserRepository userRepository) {
+	public UserController(HttpSession session,
+			UserRepository userRepository,
+			Account account) {
 		this.session = session;
-		//			this.account = account;
+		this.account = account;
 		this.userRepository = userRepository;
 	}
 
@@ -70,8 +73,8 @@ public class UserController {
 
 			// セッション管理されたアカウント情報に名前をセット
 			// 検索されたリストは１件なので、０番目をとる。
-			//			account.setName(findAccount.get(0).getName());
-			//			account.setId(findAccount.get(0).getId());
+			account.setName(findAccount.get(0).getName());
+			account.setId(findAccount.get(0).getId());
 
 			// items.htmlに引き継ぎ、その後の注文画面に引き継ぐ
 

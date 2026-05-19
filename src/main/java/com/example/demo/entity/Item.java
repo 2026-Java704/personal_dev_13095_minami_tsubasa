@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,16 +16,18 @@ import jakarta.persistence.Table;
 public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id; // 顧客ID
+	private Integer id; // ID自動採番
 
 	@Column(name = "item_name")
 	private String itemName; // 名前
 
-	@Column(name = "user_id")
-	private Integer userId;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
-	@Column(name = "genre_id")
-	private Integer genreId;
+	@ManyToOne
+	@JoinColumn(name = "genre_id")
+	private Genre genre;
 
 	private Integer price; // 金額
 
@@ -36,13 +40,22 @@ public class Item {
 	public Item() {
 	}
 
-	public Item(String itemName, Integer genreId,
+	public Item(String itemName, User user, Genre genre,
 			Integer price, LocalDate addDate, String Comment) {
 		this.itemName = itemName;
-		this.genreId = genreId;
+		this.user = user;
+		this.genre = genre;
 		this.price = price;
 		this.addDate = addDate;
 		this.comment = comment;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Integer getId() {
@@ -73,12 +86,12 @@ public class Item {
 		this.addDate = addDate;
 	}
 
-	public Integer getGenreId() {
-		return genreId;
+	public Genre getGenre() {
+		return genre;
 	}
 
-	public void setGenreId(Integer genreId) {
-		this.genreId = genreId;
+	public void setGenre(Genre genre) {
+		this.genre = genre;
 	}
 
 	public String getComment() {
