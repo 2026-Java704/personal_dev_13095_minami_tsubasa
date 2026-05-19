@@ -24,7 +24,7 @@ public class UserController {
 
 	/* 
 	 * アカウントコントローラクラスのコンストラクタ
-	 * Accounはデータベースに直接関連しないオブジェクトのため
+	 * Accountはデータベースに直接関連しないオブジェクトのため
 	 * modelクラスで管理する。
 	*/
 	public UserController(HttpSession session, UserRepository userRepository) {
@@ -75,7 +75,7 @@ public class UserController {
 
 			// items.htmlに引き継ぎ、その後の注文画面に引き継ぐ
 
-			return "items";
+			return "redirect:/items";
 		} else {
 			// 情報が違うためとどまる
 			model.addAttribute("message", "メールアドレスまたはパスワードが違います");

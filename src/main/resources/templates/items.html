@@ -6,6 +6,24 @@
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-	<p>Hello my Spring</p>
+	<h1>Hello my Spring</h1>
+	
+	<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>名前</th>
+				<th>科目</th>
+				<th>金額</th>
+				<th>コメント</th>
+			</tr>
+			<tr th:each="item:${items}">
+				<!--表の商品へのリンク付けはThymeleafのタグ外書き込みで対応可能-->
+				<td th:text="${item.addDate}"></td>
+				<td th:text="${item.itemName}"></td>
+				<td th:text="${item.genreId}"></td>
+				<td th:text="${item.price}"></td>
+				<td th:text="${item.comment}"></td>
+			</tr>
+		</table>
 </body>
 </html>
