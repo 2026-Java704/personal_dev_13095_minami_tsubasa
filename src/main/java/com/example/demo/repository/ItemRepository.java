@@ -14,4 +14,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	List<Item> findByGenreId(Integer genreId);
 
 	List<Item> findByAddDateBetween(LocalDate initDate, LocalDate finalDate);
+
+	// Trueの部分の合計（収入全体）を算出
+	List<Item> findByGenre_IsIncomeTrueAndAddDateBetween(LocalDate initDate, LocalDate finalDate);
 }

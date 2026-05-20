@@ -54,18 +54,35 @@ public class ItemController {
 		this.account = account;
 	}
 
-	// 商品一覧表示
 	/*
-	 * AccountControllerからリダイレクトした際に
-	 * items.htmlをここで起動します。
-	 * 
-	 * 起動後は、データベースのデータを保管するEntity内で項目定義した
-	 * Itemクラスと、ソートなどで使用する同様なCategoryを
-	 * Listでデータの存在分すべてを格納し、
-	 * Splingの仕様でそこから簡単に使用可能なrepositoryインターフェースで
-	 * ここではデータベースの全件表示を行います。
-	 * 
+	 * 日付による絞り込みにより、
+	 * 当月または指定した範囲内の機関の収支を計算するメソッド
 	 */
+	public List<Item> incomeBalanceView(List<Item> itemDate, LocalDate initDate, LocalDate finalDate, Model model) {
+		int totalBalance = 0;
+		int totalIncome = 0;
+
+		// 検索（期間の収支・残高を出すために使用）
+		itemDate = itemRepository.findByAddDateBetween(initDate, finalDate);
+
+		// 検索された期間に基づく収入の合計
+		List<Item> genreIncome = itemRepository.findByGenre_IsIncomeTrueAndAddDateBetween(initDate, finalDate);
+
+		for (Item total : itemDate) {
+			totalBalance += total.getPrice();
+		}
+		model.addAttribute("totalBalance", totalBalance);
+
+		for (Item total : genreIncome) {
+			totalIncome += total.getPrice();
+		}
+		model.addAttribute("totalIncome", totalIncome);
+
+		// 利用済み合計額
+		int expense = totalIncome - totalBalance;
+		model.addAttribute("totalExpense", expense);
+		return itemDate;
+	}
 
 	@GetMapping("/items")
 	public String index(
@@ -75,20 +92,6 @@ public class ItemController {
 		// 全カテゴリー一覧を取得
 		List<Genre> genreList = genreRepository.findAll();
 		model.addAttribute("genres", genreList);
-
-		// 商品一覧情報の取得
-
-		/*
-		 * 補足：items.htmlのaタグ操作によってここの処理は決まります。
-		 * th:each="category:${categories}"のthymeleaf機能で
-		 * カテゴリデータベース上のカテゴリを全権表示
-		 * 
-		 * ここで、各カテゴリをth:hrefでクリックして下記の処理につながります。
-		 * 
-		 * まず、初期ではItemを空にして置き、
-		 * 下の条件分岐で初めて表示を柔軟にできるようにしています。
-		 * 
-		 * */
 
 		// まずはItemは空にする
 		List<Item> itemList = null;
@@ -107,22 +110,18 @@ public class ItemController {
 		 * 現在の月の合計収支を確認
 		 * 
 		 * */
-		int totalBalance = 0;
 
 		// 現在の月の収支（1日～31日をデフォルト）で取得
 		LocalDate nowDate = LocalDate.now();
 
 		// その月の1日～30・31日で取得
-		LocalDate firstDay = nowDate.with(TemporalAdjusters.firstDayOfMonth());
-		LocalDate lastDay = nowDate.with(TemporalAdjusters.lastDayOfMonth());
+		LocalDate initDate = nowDate.with(TemporalAdjusters.firstDayOfMonth());
+		LocalDate finalDate = nowDate.with(TemporalAdjusters.lastDayOfMonth());
 
-		// 上記とは別で日付
-		List<Item> itemDate = itemRepository.findByAddDateBetween(firstDay, lastDay);
+		// 当月期間の収支を表示
+		incomeBalanceView(itemList, initDate, finalDate, model);
 
-		for (Item total : itemDate) {
-			totalBalance += total.getPrice();
-		}
-		model.addAttribute("totalBalance", totalBalance);
+		// genreIdが1と4の合計を出す。
 
 		// 確認したい収支のマイナス・90%を超えた場合のアラート
 
@@ -268,25 +267,28 @@ public class ItemController {
 
 		// 対象日付範囲の検索を開始
 		List<Item> itemDate = null;
-		int totalBalance = 0;
 
 		if (initDate == null || finalDate == null) {
 			model.addAttribute("searchErr", "開始と終了期間を入力しなければなりません");
 			itemDate = itemRepository.findAll();
+			// エラー時は当月期間で
+			// 現在の月の収支（1日～31日をデフォルト）で取得
+			LocalDate nowDate = LocalDate.now();
+
+			// その月の1日～30・31日で取得
+			initDate = nowDate.with(TemporalAdjusters.firstDayOfMonth());
+			finalDate = nowDate.with(TemporalAdjusters.lastDayOfMonth());
+
+			incomeBalanceView(itemDate, initDate, finalDate, model);
+			System.out.println("テスト：" + initDate + finalDate);
 		} else {
 			System.out.println("テスト：" + initDate + finalDate);
-			itemDate = itemRepository.findByAddDateBetween(initDate, finalDate);
 		}
 
-		for (Item total : itemDate) {
-			totalBalance += total.getPrice();
-		}
-
-		model.addAttribute("items", itemDate);
-		model.addAttribute("totalBalance", totalBalance);
-
-		// 更新した情報を保存
-
+		// 指定期間で収支を表示
+		List<Item> itemList = incomeBalanceView(itemDate, initDate, finalDate, model);
+		// returnされたものを格納して表示
+		model.addAttribute("items", itemList);
 		return "items";
 	}
 
