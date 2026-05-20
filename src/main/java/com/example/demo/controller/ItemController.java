@@ -19,18 +19,6 @@ import com.example.demo.repository.GenreRepository;
 import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.UserRepository;
 
-/*
- * 5/20にやること！
- * input入力欄から数値入力1~12 年
- * addDateを使ってfindByで月の範囲（1~31日）を検索
- * 
- * 例： List<Order> findByOrderDateBetween(LocalDateTime start, LocalDateTime end);
- * 変数はそれぞれinputタグのnameから取る。
- * 
- * その範囲のpriceを出す。正と負の値での結果を出す。
- * 
- * */
-
 @Controller
 public class ItemController {
 
@@ -63,10 +51,12 @@ public class ItemController {
 		int totalIncome = 0;
 
 		// 検索（期間の収支・残高を出すために使用）
-		itemDate = itemRepository.findByAddDateBetween(initDate, finalDate);
+		itemDate = itemRepository.findByUserIdAndAddDateBetween(account.getId(), initDate, finalDate);
 
 		// 検索された期間に基づく収入の合計
-		List<Item> genreIncome = itemRepository.findByGenre_IsIncomeTrueAndAddDateBetween(initDate, finalDate);
+		List<Item> genreIncome = itemRepository.findByUserIdAndAddDateBetween(
+				account.getId(), initDate,
+				finalDate);
 
 		for (Item total : itemDate) {
 			totalBalance += total.getPrice();
@@ -74,12 +64,25 @@ public class ItemController {
 		model.addAttribute("totalBalance", totalBalance);
 
 		for (Item total : genreIncome) {
-			totalIncome += total.getPrice();
+			if (total.getPrice() >= 0) {
+				totalIncome += total.getPrice();
+			}
 		}
 		model.addAttribute("totalIncome", totalIncome);
 
 		// 利用済み合計額
 		int expense = totalIncome - totalBalance;
+
+		if (expense <= 0) {
+			model.addAttribute("alert", "上限を到達しました");
+		} else if (expense >= totalIncome * 0.9) {
+			model.addAttribute("alert", "90%を超過しました");
+		} else if (expense >= totalIncome * 0.8) {
+			model.addAttribute("alert", "80%を超過しました");
+		} else {
+			model.addAttribute("alert", "収入範囲内です。");
+		}
+
 		model.addAttribute("totalExpense", expense);
 		return itemDate;
 	}
@@ -98,10 +101,10 @@ public class ItemController {
 		// aタグでカテゴリが選択されていない場合
 		if (genreId == null) {
 			// 全件を表示
-			itemList = itemRepository.findAll();
+			itemList = itemRepository.findByUserId(account.getId());
 		} else {
 			// itemsテーブルをカテゴリーIDを指定して一覧を取得
-			itemList = itemRepository.findByGenreId(genreId);
+			itemList = itemRepository.findByUserIdAndGenreId(account.getId(), genreId);
 		}
 		// itemsに返してHTML上のtableタグ内に返却
 		model.addAttribute("items", itemList);
@@ -270,7 +273,7 @@ public class ItemController {
 
 		if (initDate == null || finalDate == null) {
 			model.addAttribute("searchErr", "開始と終了期間を入力しなければなりません");
-			itemDate = itemRepository.findAll();
+			itemDate = itemRepository.findByUserId(account.getId());
 			// エラー時は当月期間で
 			// 現在の月の収支（1日～31日をデフォルト）で取得
 			LocalDate nowDate = LocalDate.now();

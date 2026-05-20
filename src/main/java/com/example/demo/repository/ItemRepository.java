@@ -16,5 +16,14 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	List<Item> findByAddDateBetween(LocalDate initDate, LocalDate finalDate);
 
 	// Trueの部分の合計（収入全体）を算出
-	List<Item> findByGenre_IsIncomeTrueAndAddDateBetween(LocalDate initDate, LocalDate finalDate);
+	List<Item> findByUserIdAndGenre_IsIncomeTrueAndAddDateBetween(Integer id, LocalDate initDate, LocalDate finalDate);
+
+	List<Item> findByUserIdAndAddDateBetween(Integer id, LocalDate initDate, LocalDate finalDate);
+
+	List<Item> findByUserId(Integer id);
+
+	List<Item> findByUserIdAndGenreId(Integer id, Integer genreId);
+
+	// 期間の最大値を求める
+
 }

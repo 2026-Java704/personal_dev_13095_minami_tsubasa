@@ -3,54 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <title>計上情報更新</title>
+<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-	<h1>計上情報更新</h1>
-	
-
-	<form th:action="@{/items/{itemId}/edit(itemId=${item.id})}" method="post">
-		<table border="1">
-			<tr>
-				<th>記録ID</th>
-				<td th:text="${item.id}"></td>
-			</tr>
-			<tr>
-				<th>日付</th>
-				<td>
-					<input type="date" name="addDate" th:value="${item.addDate}"> 
-				</td>
-			</tr>
-			<tr>
-				<th>件名</th>
-				<td>
-					<input type="text" name="itemName" th:value="${item.itemName}">
-				</td>
-			</tr>
-			<tr>
-				<th>科目</th>
-				<td>
-					<select name="genreId">
-						<option th:each="genre:${genres}"
-							th:text="|${genre.id} ${genre.genreName}|"
-							th:value="${genre.id}"></option>
-					</select>
-				</td>
-			</tr>
-			
-			<tr>
-				<th>値段</th>
-				<td>
-					<input type="number" name="price" th:value="${item.price}">
-				</td>
-			</tr>
-			<tr>
-				<th>コメント</th>
-				<td>
-					<input type="text" name="comment" th:value="${item.comment}">
-				</td>
-			</tr>
-		</table>
-		<button>更新</button>
-	</form>
+	<header>
+		<h1>計上情報更新</h1>
+	</header>
+	<div class="viewContainer">
+		<p class="status">情報を編集します。</p>
+		<form th:action="@{/items/{itemId}/edit(itemId=${item.id})}" method="post">
+			<table border="1">
+				<tr>
+					<th>記録ID</th>
+					<td th:text="${item.id}"></td>
+				</tr>
+				<tr>
+					<th>日付</th>
+					<td>
+						<input type="date" name="addDate" th:value="${item.addDate}"> 
+					</td>
+				</tr>
+				<tr>
+					<th>件名</th>
+					<td>
+						<input type="text" name="itemName" th:value="${item.itemName}">
+					</td>
+				</tr>
+				<tr>
+					<th>科目</th>
+					<td>
+						<select name="genreId">
+							<option th:each="genre:${genres}"
+								th:text="|${genre.id} ${genre.genreName}|"
+								th:value="${genre.id}"></option>
+						</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>値段</th>
+					<td>
+						<input type="number" name="price" th:value="${item.price}">
+					</td>
+				</tr>
+				<tr>
+					<th>コメント</th>
+					<td>
+						<input type="text" name="comment" th:value="${item.comment}">
+					</td>
+				</tr>
+			</table>
+			<button>更新</button>
+		</form>
+	</div>
 </body>
 </html>
