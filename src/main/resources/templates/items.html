@@ -9,12 +9,21 @@
 	<h1>計上履歴照会</h1>
 	
 	<!--５月２０日の対応-->
+	<br> <span th:text="${searchErr}" style="color: red"></span>
 	<form action="/sort" method="post">
-		<input type="number" name="year">年
-		<input type="number" name="month">月分
+		<input type="date" name="initDate">～
+		<input type="date" name="finalDate">期間分
 		<button>照会</button>
 	</form>
-	<h2>25000 円</h2>
+	<div class=
+	<p>当月残高</p>
+	<h2>[[${#numbers.formatInteger(totalBalance, 3, 'COMMA')}]] 円</h2>
+	<p>当月収入</p>
+	<h2>[[${#numbers.formatInteger(totalBalance, 3, 'COMMA')}]] 円</h2>
+	
+	<meter min="0" max="100" low="33" high="66" optimum="80" value="50">
+	  at 50/100
+	</meter>
 	<p>収入の範囲内です</p>
 	
 	<a href="/items">全項目</a>

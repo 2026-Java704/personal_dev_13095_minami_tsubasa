@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -102,6 +103,29 @@ public class ItemController {
 		// itemsに返してHTML上のtableタグ内に返却
 		model.addAttribute("items", itemList);
 
+		/*
+		 * 現在の月の合計収支を確認
+		 * 
+		 * */
+		int totalBalance = 0;
+
+		// 現在の月の収支（1日～31日をデフォルト）で取得
+		LocalDate nowDate = LocalDate.now();
+
+		// その月の1日～30・31日で取得
+		LocalDate firstDay = nowDate.with(TemporalAdjusters.firstDayOfMonth());
+		LocalDate lastDay = nowDate.with(TemporalAdjusters.lastDayOfMonth());
+
+		// 上記とは別で日付
+		List<Item> itemDate = itemRepository.findByAddDateBetween(firstDay, lastDay);
+
+		for (Item total : itemDate) {
+			totalBalance += total.getPrice();
+		}
+		model.addAttribute("totalBalance", totalBalance);
+
+		// 確認したい収支のマイナス・90%を超えた場合のアラート
+
 		return "items";
 	}
 
@@ -199,4 +223,36 @@ public class ItemController {
 
 		return "redirect:/items";
 	}
+
+	@PostMapping("/sort")
+	public String sort(
+
+			@RequestParam(defaultValue = "") LocalDate initDate,
+			@RequestParam(defaultValue = "") LocalDate finalDate,
+			Model model) {
+
+		// 対象日付範囲の検索を開始
+		List<Item> itemDate = null;
+		int totalBalance = 0;
+
+		if (initDate == null || finalDate == null) {
+			model.addAttribute("searchErr", "開始と終了期間を入力しなければなりません");
+			itemDate = itemRepository.findAll();
+		} else {
+			System.out.println("テスト：" + initDate + finalDate);
+			itemDate = itemRepository.findByAddDateBetween(initDate, finalDate);
+		}
+
+		for (Item total : itemDate) {
+			totalBalance += total.getPrice();
+		}
+
+		model.addAttribute("items", itemDate);
+		model.addAttribute("totalBalance", totalBalance);
+
+		// 更新した情報を保存
+
+		return "items";
+	}
+
 }
