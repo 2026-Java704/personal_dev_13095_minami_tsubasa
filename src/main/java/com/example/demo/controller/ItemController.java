@@ -139,6 +139,25 @@ public class ItemController {
 		return "addItems";
 	}
 
+	/*
+	 *  計上追加と編集時の重複する処理をメソッド化
+	 *
+	 */
+	public void redirectView(LocalDate addDate,
+			String itemName,
+			Integer price,
+			String comment,
+			Model model) {
+		// プルダウンで科目一覧をリクエスト後に表示するためのコード
+		List<Genre> genreList = genreRepository.findAll();
+		model.addAttribute("genres", genreList);
+
+		model.addAttribute("setAddDate", addDate);
+		model.addAttribute("setItemName", itemName);
+		model.addAttribute("setPrice", price);
+		model.addAttribute("setComment", comment);
+	}
+
 	@PostMapping("/items/add")
 	public String store(
 			@RequestParam(defaultValue = "") LocalDate addDate,
@@ -156,11 +175,26 @@ public class ItemController {
 		if (addDate == null || itemName == null || genreId == null || price == null) {
 			model.addAttribute("inputErr", "入力項目に不足があります。");
 
-			// プルダウンで科目一覧を表示するためのコード
-			List<Genre> genreList = genreRepository.findAll();
-			model.addAttribute("genres", genreList);
+			redirectView(addDate, itemName, price, comment, model);
+
 			return "addItems";
 		}
+
+		// 次に計上の不備を確認
+		if (price < 0) {
+			if (genreId == 1 || genreId == 4) {
+				model.addAttribute("priceErr", "科目に対して入力値が不正です");
+				redirectView(addDate, itemName, price, comment, model);
+				return "addItems";
+			}
+		} else { // 0以上
+			if (!(genreId == 1 || genreId == 4)) {
+				model.addAttribute("priceErr", "科目に対して入力値が不正です。");
+				redirectView(addDate, itemName, price, comment, model);
+				return "addItems";
+			}
+		}
+
 		itemRepository.save(item);
 
 		return "redirect:/items";
@@ -192,7 +226,8 @@ public class ItemController {
 			@RequestParam(defaultValue = "") String itemName,
 			@RequestParam(defaultValue = "") Integer genreId,
 			@RequestParam(defaultValue = "") Integer price,
-			@RequestParam(defaultValue = "") String comment) {
+			@RequestParam(defaultValue = "") String comment,
+			Model model) {
 
 		// 変更された科目IDを使う
 		Genre genre = genreRepository.findById(genreId).get();
