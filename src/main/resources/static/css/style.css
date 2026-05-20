@@ -1,0 +1,157 @@
+/* 全体 */
+body {
+	background-color: rgb(177, 166, 255); /* 背景色  */
+	text-align: center; /* 中央寄せ */
+    min-width: 900px; /* 最小幅 */
+	margin: 0;
+}
+/* ヘッダー、ナビゲーションメニュー、フッター */
+header, nav, footer {
+	background-color: rgb(0, 64, 64); /* 背景色 */
+	color: rgb(255, 255, 128); /* 文字色 */
+
+	padding-top: 5px; /* 内側余白(上) */
+	padding-bottom: 5px; /* 内側余白(下) */
+}
+/* ヘッダー、ナビゲーション内リンク */
+header a, nav a {
+	color: #ffffff;
+}
+/* ヘッダー内見出し */
+header h1 {
+	font-size: 20pt;
+	margin: 10px auto;
+}
+/* 仕切り線 */
+hr {
+	border-top: 2px dashed #7d8bae;
+}
+/* メイン */
+main {
+	background-color: #FFFFFF;
+	min-height: 50px;
+	padding: 20px;
+}
+/* 表線 */
+table, th, td {
+	border-collapse: collapse;
+	border: 1px solid #7d8bae;
+}
+/* 表 */
+table {
+    margin: 5px auto;
+    min-width: 800px;
+}
+/* 表見出しセル */
+table th {
+	background: #7d8bae;
+	color: #ffffff;
+}
+/* 送信ボタン */
+button {
+	margin: 2px;
+	padding: 5px 20px;
+	background-color: #e5857b;
+	color: #ffffff;
+	border: none;
+	width:150px;
+	cursor: pointer;
+}
+/* 送信ボタン(マウスオーバー時) */
+button:hover {
+	background-color: #f1b2b2;
+}
+
+meter {
+  /* 全体のサイズと見た目のリセット */
+  width: 100%;
+  max-width: 320px;
+  height: 4em;
+  border: none;
+}
+
+/* --- Chrome, Safari, Edge --- */
+/* メーターの背景部分 */
+meter::-webkit-meter-bar {
+  background: rgb(192, 192, 192);
+  box-shadow: inset  rgb(180, 175, 175);
+}
+
+/* メーターの値（ゲージ）部分 */
+meter::-webkit-meter-optimum-value {
+  background: linear-gradient(90deg, rgb(0, 0, 160) 0%, rgb(0, 0, 160) 100%);
+}
+
+
+meter::-webkit-meter-suboptimum-value {
+  background: rgb(0, 128, 0); /* やや低い・高いときの色 */
+}
+
+meter::-webkit-meter-even-less-good-value {
+  background: #f44336; /* 良くないときの色 */
+}
+
+h2 {
+	line-height: 0.5em;
+	font-size: 2.5em;
+	font-weight: bold;
+}
+
+#balance {
+	color: rgb(0, 0, 255);
+}
+
+#income {
+	color: rgb(0, 180, 30);
+}
+
+.linkButton{
+    width: 50px;
+    padding: 10px 36px;
+    margin: 10px;
+    background: #569f3c;
+    color: #FFF;
+    text-decoration: none;
+    text-align: center;
+	border-radius: 20px;
+	line-height: 5em;
+}
+.linkButton:hover{
+    background: #225f0d;
+}
+
+.linkAdd {
+    width: 50px;
+    padding: 10px 64px;
+    margin: 2em 2em 5em 2em;
+    background: rgb(255, 128, 0);
+    color: #FFF;
+    text-decoration: none;
+    text-align: center;
+	border-radius: 20px;
+}
+.linkAdd:hover{
+    background: rgb(255, 0, 0);
+}
+
+.alertView {
+	font-size: 2em;
+}
+
+.status {
+	font-size: 1.5em;
+}
+
+/*各カードの要素を作る*/
+.viewContainer {
+	background-color: rgb(255, 253, 242);
+	border-radius: 15px;
+	margin: 3em 10em 0 10em; 
+	padding-top: 2em;
+	padding-bottom: 3em;
+	align-items: center;
+}
+
+
+
+
