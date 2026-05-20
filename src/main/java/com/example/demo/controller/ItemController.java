@@ -50,6 +50,15 @@ public class ItemController {
 		int totalBalance = 0;
 		int totalIncome = 0;
 
+		// 最大値を取得するための式
+		List<Item> itemMax = itemRepository.findByUserIdOrderByPriceAsc(account.getId());
+
+		// 最大出費
+		Integer maxPrice = itemMax.get(0).getPrice();
+		String maxItem = itemMax.get(0).getItemName();
+		model.addAttribute("maxPrice", maxPrice);
+		model.addAttribute("maxItem", maxItem);
+
 		// 検索（期間の収支・残高を出すために使用）
 		itemDate = itemRepository.findByUserIdAndAddDateBetween(account.getId(), initDate, finalDate);
 
@@ -73,7 +82,7 @@ public class ItemController {
 		// 利用済み合計額
 		int expense = totalIncome - totalBalance;
 
-		if (expense <= 0) {
+		if (expense >= totalIncome) {
 			model.addAttribute("alert", "上限を到達しました");
 		} else if (expense >= totalIncome * 0.9) {
 			model.addAttribute("alert", "90%を超過しました");

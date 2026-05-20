@@ -25,6 +25,8 @@
 		<p class="status">当月収入 / 最大出費</p>
 		<h2>
 			<span id="income">[[${#numbers.formatInteger(totalIncome, 3, 'COMMA')}]] 円</span>
+			<span id="maxPrice">[[${#numbers.formatInteger(maxPrice, 3, 'COMMA')}]] 円</span>
+			<span id="maxPrice">（[[${maxItem}]]）</span>
 		</h2>
 		
 		<meter class="custom-meter" th:attr="value=${totalBalance}, min=0, max=${totalIncome}, low=0, high=${totalIncome * 0.6}" 

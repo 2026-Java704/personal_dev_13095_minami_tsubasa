@@ -24,6 +24,9 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	List<Item> findByUserIdAndGenreId(Integer id, Integer genreId);
 
+	// ユーザーが最も多く使っている項目を出力
+	List<Item> findByUserIdOrderByPriceAsc(Integer id);
+
 	// 期間の最大値を求める
 
 }
