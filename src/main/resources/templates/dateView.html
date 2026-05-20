@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>カレンダー表示</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+	<header>
+		<h1>日別利用実績</h1>
+	</header>
+	<div class="viewContainer">
+		<div id="calendar"></div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/locales-all.global.min.js"></script>
+
+	<!--
+		5月21日にすること
+		下記の例を参考に、ユーザーIDの範囲でfindByされた実績一覧から
+		addDateの値を広い、itemsからカレンダーに対して表示可能になるよう値を渡す。
+		
+		<script th:inline="javascript">
+		    // Thymeleafの値をJavaScriptの変数に代入
+		    var userName = /*[[${user.name}]]*/ 'デフォルト値';
+		    var userId = /*[[${user.id}]]*/ 0;
+		</script>
+		
+		一旦は下記コードのtitleにitemName, startにaddDateが入りそう。
+		別途変数を設けておく。
+	-->
+	
+	<script>
+		
+		
+		document.addEventListener('DOMContentLoaded', function () {
+			var calendarEl = document.getElementById('calendar');
+
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				initialView: 'dayGridMonth',
+				locale: 'ja',
+				events: [
+					{
+						title: 'サンプル予定',
+						start: '2026-04-27'
+					}
+				]
+			});
+			calendar.render();
+		});
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+package com.example.demo.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.example.demo.model.Account;
+import com.example.demo.repository.GenreRepository;
+import com.example.demo.repository.ItemRepository;
+import com.example.demo.repository.UserRepository;
+
+@Controller
+public class dateController {
+
+	/*
+	 *  repositoryフォルダにあるインターフェースを定義し、
+	 *  情報を更新したりする際に必要になります。
+	 */
+	private final UserRepository userRepository;
+	private final GenreRepository genreRepository;
+	private final ItemRepository itemRepository;
+	private final Account account;
+
+	public dateController(
+			UserRepository userRepository,
+			GenreRepository genreRepository,
+			ItemRepository itemRepository,
+			Account account) {
+		this.userRepository = userRepository;
+		this.genreRepository = genreRepository;
+		this.itemRepository = itemRepository;
+		this.account = account;
+	}
+
+	@GetMapping("/items/detail")
+	public String calender() {
+
+		return "dateView";
+	}
+}
