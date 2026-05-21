@@ -44,12 +44,4 @@ public class dateController {
 		return "dateView";
 	}
 
-	@GetMapping("/items/getInfo")
-	public String getInfo(Model model) {
-
-		List<Item> itemList = itemRepository.findByUserId(account.getId());
-		model.addAttribute("items", itemList);
-
-		return "dateView";
-	}
 }
