@@ -1,8 +1,12 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.demo.entity.Item;
 import com.example.demo.model.Account;
 import com.example.demo.repository.GenreRepository;
 import com.example.demo.repository.ItemRepository;
@@ -32,7 +36,19 @@ public class dateController {
 	}
 
 	@GetMapping("/items/detail")
-	public String calender() {
+	public String calender(Model model) {
+
+		List<Item> itemList = itemRepository.findByUserId(account.getId());
+		model.addAttribute("items", itemList);
+
+		return "dateView";
+	}
+
+	@GetMapping("/items/getInfo")
+	public String getInfo(Model model) {
+
+		List<Item> itemList = itemRepository.findByUserId(account.getId());
+		model.addAttribute("items", itemList);
 
 		return "dateView";
 	}

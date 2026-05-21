@@ -18,40 +18,66 @@
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/locales-all.global.min.js"></script>
-
-	<!--
-		5月21日にすること
-		下記の例を参考に、ユーザーIDの範囲でfindByされた実績一覧から
-		addDateの値を広い、itemsからカレンダーに対して表示可能になるよう値を渡す。
-		
-		<script th:inline="javascript">
-		    // Thymeleafの値をJavaScriptの変数に代入
-		    var userName = /*[[${user.name}]]*/ 'デフォルト値';
-		    var userId = /*[[${user.id}]]*/ 0;
-		</script>
-		
-		一旦は下記コードのtitleにitemName, startにaddDateが入りそう。
-		別途変数を設けておく。
-	-->
 	
-	<script>
-		
+	<!--モーダルで詳細 ボタンはJSで発行-->
+	<input type="checkbox" id="modalToggle" class="modal-checkbox">
+	<div class="modal" id="modal">
+	  <div class="modal-wrapper">
+	    <label for="modalToggle" class="close">&times;</label>
+	    <div class="modal-content">
+	      <h1 id="itemTitle">例：家賃</h1>
+	      <p id="itemPrice">金額・科目・詳細コメントを出す</p>
+	    </div>
+	  </div>
+	</div>
+	
+	<script th:inline="javascript">
 		
 		document.addEventListener('DOMContentLoaded', function () {
 			var calendarEl = document.getElementById('calendar');
+			
+			let rowItems = /*[[${items}]]*/ [];
+					    
+						// 表示を変数にする。
+						let calenderView = rowItems.map(function(item) {
+							return {
+								title: item.itemName, 
+								start: item.addDate,
+								
+								extendedProps: {
+								        itemName: item.itemName,
+								        genreName: item.genre.genreName,
+								        price: item.price
+								      }
+							};
+						});
 
 			var calendar = new FullCalendar.Calendar(calendarEl, {
 				initialView: 'dayGridMonth',
 				locale: 'ja',
-				events: [
-					{
-						title: 'サンプル予定',
-						start: '2026-04-27'
-					}
-				]
+				events: calenderView,
+				
+				// モーダルの展開
+				eventClick: function(info) {
+		      
+			      // モーダルを開く（チェックボックスやlabelのfor属性を利用する場合）
+			      document.getElementById('modalToggle').checked = true;
+				 
+				  // 変数からとってきた値をHTMLのモーダルに渡す処理
+				  const GET_ITEM_NAME = info.event.extendedProps.itemName;
+				
+				  
+				  const ITEM_TITLE = document.querySelector("#itemTitle");
+				  ITEM_TITLE.innerHTML = GET_ITEM_NAME;
+			    }
 			});
+			
+			
 			calendar.render();
 		});
+		
+		
+		
 	</script>
 </body>
 
