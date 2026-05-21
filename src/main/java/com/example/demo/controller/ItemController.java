@@ -85,9 +85,9 @@ public class ItemController {
 		if (expense >= totalIncome) {
 			model.addAttribute("alert", "上限を到達しました");
 		} else if (expense >= totalIncome * 0.9) {
-			model.addAttribute("alert", "90%を超過しました");
-		} else if (expense >= totalIncome * 0.8) {
 			model.addAttribute("alert", "80%を超過しました");
+		} else if (expense >= totalIncome * 0.6) {
+			model.addAttribute("alert", "60%を超過しました");
 		} else {
 			model.addAttribute("alert", "収入範囲内です。");
 		}
@@ -132,10 +132,6 @@ public class ItemController {
 
 		// 当月期間の収支を表示
 		incomeBalanceView(itemList, initDate, finalDate, model);
-
-		// genreIdが1と4の合計を出す。
-
-		// 確認したい収支のマイナス・90%を超えた場合のアラート
 
 		return "items";
 	}
@@ -300,6 +296,8 @@ public class ItemController {
 		// 指定期間で収支を表示
 		List<Item> itemList = incomeBalanceView(itemDate, initDate, finalDate, model);
 		// returnされたものを格納して表示
+		model.addAttribute("setInitDate", initDate);
+		model.addAttribute("setFinalDate", finalDate);
 		model.addAttribute("items", itemList);
 		return "items";
 	}

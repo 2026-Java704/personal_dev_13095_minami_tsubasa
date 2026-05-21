@@ -1,9 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap');
+
 /* 全体 */
 body {
 	background-color: rgb(177, 166, 255); /* 背景色  */
 	text-align: center; /* 中央寄せ */
     min-width: 900px; /* 最小幅 */
 	margin: 0;
+	font-family: "Zen Maru Gothic", sans-serif;
+	font-weight: 600;
 }
 /* ヘッダー、ナビゲーションメニュー、フッター */
 header, nav, footer {
@@ -12,6 +16,7 @@ header, nav, footer {
 
 	padding-top: 5px; /* 内側余白(上) */
 	padding-bottom: 5px; /* 内側余白(下) */
+	position: sticky;
 }
 /* ヘッダー、ナビゲーション内リンク */
 header a, nav a {
@@ -105,6 +110,10 @@ h2 {
 	color: rgb(0, 180, 30);
 }
 
+#maxPrice, #maxItem {
+	color: rgb(255, 0, 35);
+}
+
 .linkButton{
     width: 50px;
     padding: 10px 36px;
@@ -151,6 +160,10 @@ h2 {
 	padding-bottom: 3em;
 	align-items: center;
 }
+
+
+
+
 
 /*
 カレンダー分
@@ -218,6 +231,18 @@ h2 {
 
 .modal-checkbox:checked + .modal {
   display: flex;
+}
+
+/*モーダルの文字の見た目修正*/
+#itemTitle {
+	font-size: 2.5em;
+	color: rgb(0, 0, 255);
+	
+}
+
+#modalTable {
+	margin: 5px auto;
+	min-width: 300px;
 }
 
 

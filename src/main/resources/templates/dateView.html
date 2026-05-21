@@ -26,7 +26,19 @@
 	    <label for="modalToggle" class="close">&times;</label>
 	    <div class="modal-content">
 	      <h1 id="itemTitle">例：家賃</h1>
-	      <p id="itemPrice">金額・科目・詳細コメントを出す</p>
+	      <p>
+			<table border="1" id="modalTable">
+				<tr>
+					<th>科目名</th><td id="genreTitle">費用</td>
+				</tr>
+				<tr>
+					<th>金額</th><td id="priceInfo"></td>
+				</tr>
+				<tr>
+					<th>備考</th><td id="commentView">費用</td>
+				</tr>
+			</table>
+		</p>
 	    </div>
 	  </div>
 	</div>
@@ -47,7 +59,8 @@
 								extendedProps: {
 								        itemName: item.itemName,
 								        genreName: item.genre.genreName,
-								        price: item.price
+								        price: item.price,
+										comment: item.comment
 								      }
 							};
 						});
@@ -65,10 +78,26 @@
 				 
 				  // 変数からとってきた値をHTMLのモーダルに渡す処理
 				  const GET_ITEM_NAME = info.event.extendedProps.itemName;
+				  const GET_GENRE_NAME = info.event.extendedProps.genreName;
+				  const GET_PRICE = info.event.extendedProps.price;
+				  const GET_COMMENT = info.event.extendedProps.comment;
 				
-				  
+				  // DOMを用いて表示を行う
 				  const ITEM_TITLE = document.querySelector("#itemTitle");
 				  ITEM_TITLE.innerHTML = GET_ITEM_NAME;
+				  
+				  const GENRE_TITLE = document.querySelector("#genreTitle");
+				  GENRE_TITLE.innerHTML = GET_GENRE_NAME;
+				  
+				  const PRICE_INFO = document.querySelector("#priceInfo");
+				  PRICE_INFO.innerHTML = GET_PRICE;
+				  
+				  const COMMENT_VIEW = document.querySelector("#commentView");
+				  if (GET_COMMENT === "") {
+					COMMENT_VIEW.innerHTML = "コメントはありません"
+				  } else {
+				  	COMMENT_VIEW.innerHTML = GET_COMMENT;
+				  }
 			    }
 			});
 			

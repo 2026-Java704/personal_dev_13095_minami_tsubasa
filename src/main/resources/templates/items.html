@@ -13,8 +13,8 @@
 	<div class="viewContainer">
 		<br> <span th:text="${searchErr}" style="color: red"></span>
 		<form action="/sort" method="post">
-			<input type="date" name="initDate">～
-			<input type="date" name="finalDate">期間分
+			<input type="date" name="initDate" th:value="${setInitDate}">～
+			<input type="date" name="finalDate"th:value="${setFinalDate}">期間分
 			<button>照会</button>
 		</form>
 		<p class="status">当月残高</p>
@@ -26,7 +26,7 @@
 		<h2>
 			<span id="income">[[${#numbers.formatInteger(totalIncome, 3, 'COMMA')}]] 円</span>
 			<span id="maxPrice">[[${#numbers.formatInteger(maxPrice, 3, 'COMMA')}]] 円</span>
-			<span id="maxPrice">（[[${maxItem}]]）</span>
+			<span id="maxItem">（[[${maxItem}]]）</span>
 		</h2>
 		
 		<meter class="custom-meter" th:attr="value=${totalBalance}, min=0, max=${totalIncome}, low=0, high=${totalIncome * 0.6}" 
