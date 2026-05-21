@@ -35,7 +35,7 @@ public class dateController {
 		this.account = account;
 	}
 
-	// カレンダーに情報を渡す
+	// ユーザーの計上記録をカレンダーに渡す
 	@GetMapping("/items/detail")
 	public String calender(Model model) {
 
