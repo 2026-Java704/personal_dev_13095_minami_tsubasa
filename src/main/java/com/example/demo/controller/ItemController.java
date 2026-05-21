@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
@@ -46,6 +48,16 @@ public class ItemController {
 		this.genreRepository = genreRepository;
 		this.itemRepository = itemRepository;
 		this.account = account;
+	}
+
+	public String fileNameGenerate() {
+		LocalDateTime now = LocalDateTime.now();
+
+		// フォーマットの定義 (大文字のMMは月、hhは12時間表記、HHは24時間表記)
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HHmmss");
+		// 文字列へ変換
+		String formattedDate = "recipt-" + (now.format(formatter));
+		return formattedDate;
 	}
 
 	/*
@@ -104,6 +116,10 @@ public class ItemController {
 
 	@GetMapping("/items")
 	public String index(
+
+			/*
+			 * 5月22日　セッションによる名前表示とログアウトボタンを実装
+			 * */
 			@RequestParam(defaultValue = "") Integer genreId,
 			Model model) {
 
@@ -190,14 +206,24 @@ public class ItemController {
 		// 元ファイル名
 		String fileName = file.getOriginalFilename();
 
+		/*
+		 * アップロード時の重複防止のため
+		 * 自動で変換する処理を行う。
+		 * 拡張子を取得
+		 * */
+		String extension = fileName != null ? fileName.substring(fileName.lastIndexOf(".")) : "";
+
+		// リネームしたい新しいファイル名を指定 (例: recipt-2026-05-21-173625.png
+		String newFileName = fileNameGenerate() + extension;
+
 		// 保存先生成
-		Path filePath = Paths.get(uploadDir + fileName);
+		Path filePath = Paths.get(uploadDir + newFileName);
 
 		// ファイル保存
 		Files.copy(file.getInputStream(), filePath);
 
 		// DB保存用URL
-		String reciptImage = "/images/" + fileName;
+		String reciptImage = "/images/" + newFileName;
 
 		Item item = new Item(itemName, user, genre, price, addDate, comment, reciptImage);
 
@@ -295,14 +321,24 @@ public class ItemController {
 		// 元ファイル名
 		String fileName = file.getOriginalFilename();
 
+		/*
+		 * アップロード時の重複防止のため
+		 * 自動で変換する処理を行う。
+		 * 拡張子を取得
+		 * */
+		String extension = fileName != null ? fileName.substring(fileName.lastIndexOf(".")) : "";
+
+		// リネームしたい新しいファイル名を指定 (例: recipt-2026-05-21-173625.png
+		String newFileName = fileNameGenerate() + extension;
+
 		// 保存先生成
-		Path filePath = Paths.get(uploadDir + fileName);
+		Path filePath = Paths.get(uploadDir + newFileName);
 
 		// ファイル保存
 		Files.copy(file.getInputStream(), filePath);
 
 		// DB保存用URL
-		String reciptImage = "/images/" + fileName;
+		String reciptImage = "/images/" + newFileName;
 
 		item.setAddDate(addDate);
 		item.setItemName(itemName);

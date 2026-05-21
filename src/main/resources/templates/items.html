@@ -9,7 +9,12 @@
 	<header>
 		<h1>計上履歴照会</h1>
 	</header>
-	<!--５月２０日の対応-->
+	<!--５月２２日の対応
+		ログアウト・セッションによる名前表示
+		カレンダーに期間別（1・15・25日の給料日開始で）
+		いくら使っているか？が表示できるように。
+		一応業務システムの形に添って手動入力での検索ができるようにしている。
+	-->
 	<div class="viewContainer">
 		<br> <span th:text="${searchErr}" style="color: red"></span>
 		<form action="/sort" method="post">
@@ -17,7 +22,7 @@
 			<input type="date" name="finalDate"th:value="${setFinalDate}">期間分
 			<button>照会</button>
 		</form>
-		<p class="status">当月残高</p>
+		<p class="status">指定期間残高</p>
 		<h2>
 			<span id="balance">[[${#numbers.formatInteger(totalBalance, 3, 'COMMA')}]] 円</span>
 			<span id="expense">/ [[${#numbers.formatInteger(totalExpense, 3, 'COMMA')}]] 円 使用済み</span>

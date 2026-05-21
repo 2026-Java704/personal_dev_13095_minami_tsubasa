@@ -67,6 +67,22 @@ button:hover {
 	background-color: #f1b2b2;
 }
 
+.linkNew {
+	display: inline-block;
+    width: 10em;
+    padding: 10px 24px;
+    margin: 2em auto;
+    background: rgb(255, 128, 0);
+    color: #FFF;
+    text-decoration: none;
+    text-align: center;
+	border-radius: 20px;
+}
+
+.linkNew:hover{
+    background: rgb(255, 0, 0);
+}
+
 meter {
   /* 全体のサイズと見た目のリセット */
   width: 100%;
