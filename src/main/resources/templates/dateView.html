@@ -38,6 +38,7 @@
 					<th>備考</th><td id="commentView">費用</td>
 				</tr>
 			</table>
+			<a id="reciptView" href="#">領収書を表示</a>
 		</p>
 	    </div>
 	  </div>
@@ -60,7 +61,8 @@
 								        itemName: item.itemName,
 								        genreName: item.genre.genreName,
 								        price: item.price,
-										comment: item.comment
+										comment: item.comment,
+										imagePath: item.reciptImage
 								      }
 							};
 						});
@@ -81,6 +83,7 @@
 				  const GET_GENRE_NAME = info.event.extendedProps.genreName;
 				  const GET_PRICE = info.event.extendedProps.price;
 				  const GET_COMMENT = info.event.extendedProps.comment;
+				  const GET_IMAGE = info.event.extendedProps.imagePath;
 				
 				  // DOMを用いて表示を行う
 				  const ITEM_TITLE = document.querySelector("#itemTitle");
@@ -97,6 +100,15 @@
 					COMMENT_VIEW.innerHTML = "コメントはありません"
 				  } else {
 				  	COMMENT_VIEW.innerHTML = GET_COMMENT;
+				  }
+				  
+				  const RECIPT_LINK = document.getElementById('reciptView');
+				  
+				  if (GET_IMAGE == null) {
+					RECIPT_LINK.href = "";
+					RECIPT_LINK.innerHTML = "領収書はありません"		
+				  } else {
+				 	RECIPT_LINK.href = GET_IMAGE;
 				  }
 			    }
 			});

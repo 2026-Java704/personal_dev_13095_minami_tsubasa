@@ -36,18 +36,22 @@ public class Item {
 
 	private String comment;
 
+	@Column(name = "recipt_image")
+	private String reciptImage;
+
 	// コンストラクタ
 	public Item() {
 	}
 
 	public Item(String itemName, User user, Genre genre,
-			Integer price, LocalDate addDate, String Comment) {
+			Integer price, LocalDate addDate, String Comment, String reciptImage) {
 		this.itemName = itemName;
 		this.user = user;
 		this.genre = genre;
 		this.price = price;
 		this.addDate = addDate;
 		this.comment = comment;
+		this.reciptImage = reciptImage;
 	}
 
 	public User getUser() {
@@ -100,5 +104,13 @@ public class Item {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public String getReciptImage() {
+		return reciptImage;
+	}
+
+	public void setReciptImage(String reciptImage) {
+		this.reciptImage = reciptImage;
 	}
 }

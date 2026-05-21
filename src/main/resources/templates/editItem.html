@@ -11,6 +11,8 @@
 	</header>
 	<div class="viewContainer">
 		<p class="status">情報を編集します。</p>
+		<br> <span th:text="${inputErr}" style="color: red"></span>
+		<br> <span th:text="${priceErr}" style="color: red"></span>
 		<form th:action="@{/items/{itemId}/edit(itemId=${item.id})}" method="post">
 			<table border="1">
 				<tr>

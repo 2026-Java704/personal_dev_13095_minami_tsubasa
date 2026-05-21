@@ -1,5 +1,9 @@
 package com.example.demo.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.Genre;
 import com.example.demo.entity.Item;
@@ -172,14 +177,30 @@ public class ItemController {
 			@RequestParam(defaultValue = "") Integer genreId,
 			@RequestParam(defaultValue = "") Integer price,
 			@RequestParam(defaultValue = "") String comment,
-			Model model) {
+			@RequestParam("imageFile") MultipartFile file,
+			Model model) throws IOException {
 
 		Genre genre = genreRepository.findById(genreId).get();
 		User user = userRepository.findById(account.getId()).get();
 
-		Item item = new Item(itemName, user, genre, price, addDate, comment);
+		// 保存先
+		String uploadDir = "src/main/resources/static/images/";
 
-		if (addDate == null || itemName == null || genreId == null || price == null) {
+		// 元ファイル名
+		String fileName = file.getOriginalFilename();
+
+		// 保存先生成
+		Path filePath = Paths.get(uploadDir + fileName);
+
+		// ファイル保存
+		Files.copy(file.getInputStream(), filePath);
+
+		// DB保存用URL
+		String reciptImage = "/images/" + fileName;
+
+		Item item = new Item(itemName, user, genre, price, addDate, comment, reciptImage);
+
+		if (addDate == null || itemName == null || genreId == null || price == null || file == null) {
 			model.addAttribute("inputErr", "入力項目に不足があります。");
 
 			redirectView(addDate, itemName, price, comment, model);
@@ -248,6 +269,28 @@ public class ItemController {
 		item.setUser(user);
 		item.setPrice(price);
 		item.setComment(comment);
+
+		//		if (addDate == null || itemName == null || genreId == null || price == null) {
+		//			model.addAttribute("inputErr", "入力項目に不足があります。");
+		//
+		//			redirectView(addDate, itemName, price, comment, model);
+		//
+		//			return "editItem";
+		//		}
+		//
+		//		if (price < 0) {
+		//			if (genreId == 1 || genreId == 4) {
+		//				model.addAttribute("priceErr", "科目に対して入力値が不正です");
+		//				redirectView(addDate, itemName, price, comment, model);
+		//				return "editItem";
+		//			}
+		//		} else { // 0以上
+		//			if (!(genreId == 1 || genreId == 4)) {
+		//				model.addAttribute("priceErr", "科目に対して入力値が不正です。");
+		//				redirectView(addDate, itemName, price, comment, model);
+		//				return "editItem";
+		//			}
+		//		}
 
 		// 更新した情報を保存
 		itemRepository.save(item);
