@@ -9,7 +9,7 @@
 	<header>
 		<h1>ログイン</h1>
 	</header>
-	<main>
+	<div class="viewContainer">
 		<br> <span th:text="${message}" style="color: red"></span>
 		<form action="/login" method="post">
 			<input type="text" name="email" placeholder="メールアドレス"><br>
@@ -18,6 +18,6 @@
 			
 		</form>
 		<a href="/register">登録はこちら</a>
-	</main>
+	</div>
 </body>
 </html>

@@ -39,8 +39,6 @@
 	
 	<div class="viewContainer">
 		<a href="/items" class="linkButton">全項目</a>
-		
-		<br>
 			<a th:each="genre:${genres}"
 			   th:href="@{/items(genreId=${genre.id})}"
 			   th:text="${genre.genreName}"
