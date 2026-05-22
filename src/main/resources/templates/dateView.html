@@ -115,15 +115,6 @@
 			});
 			calendar.render();
 				
-			document.getElementById('openDate').addEventListner('click', function() {
-				
-				let nowDateGet = calender.getDate();
-				let getYear = nowDateGet.getFullYear();
-				let getMonth = nowDateGet.getMonth();
-				
-				let formatMonth = String(getMonth).padStart(2, '0');
-				console.log(getYear + "-" + formatMonth);
-			});
 		});
 		
 		
