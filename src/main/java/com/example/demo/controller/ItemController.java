@@ -190,6 +190,8 @@ public class ItemController {
 
 		model.addAttribute("genreTotal", genreTotal);
 
+		// ログインした情報を表示
+		model.addAttribute("userName", account.getName());
 		return "items";
 	}
 

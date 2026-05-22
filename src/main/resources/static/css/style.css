@@ -2,12 +2,13 @@
 
 /* 全体 */
 body {
-	background-color: rgb(177, 166, 255); /* 背景色  */
+	background-color: rgb(215, 196, 71); /* 背景色  */
 	text-align: center; /* 中央寄せ */
     min-width: 900px; /* 最小幅 */
 	margin: 0;
 	font-family: "Zen Maru Gothic", sans-serif;
 	font-weight: 600;
+	color: rgb(108, 63, 0);
 }
 /* ヘッダー、ナビゲーションメニュー、フッター */
 header {
@@ -15,10 +16,11 @@ header {
 	top: 0;
 	left: 0;
 	width: 100%;
-	background-color: rgb(0, 64, 64); /* 背景色 */
+	background-color: rgb(0, 85, 40); /* 背景色 */
 	color: rgb(255, 255, 128); /* 文字色 */
 	padding-top: 2px; /* 内側余白(上) */
 	z-index: 1000;
+	
 }
 /* ヘッダー、ナビゲーション内リンク */
 header a {
@@ -26,8 +28,9 @@ header a {
 }
 /* ヘッダー内見出し */
 header h1 {
-	font-size: 3.5em;
+	font-size: 3.0em;
 	margin: 5px auto;
+	font-style: italic;
 }
 /* 仕切り線 */
 hr {
@@ -41,7 +44,7 @@ main {
 /* 表線 */
 table, th, td {
 	border-collapse: collapse;
-	border: 1px solid #7d8bae;
+	border: 1px solid  rgb(181, 255, 55);
 }
 /* 表 */
 table {
@@ -50,23 +53,23 @@ table {
 }
 /* 表見出しセル */
 table th {
-	background: #7d8bae;
-	color: #ffffff;
+	background: rgb(181, 255, 55);
 }
 /* 送信ボタン */
 button {
 	margin: 2px;
 	padding: 5px 20px;
-	background-color: #e5857b;
-	color: #ffffff;
+	background-color: rgb(208, 169, 80);
+	color: rgb(128, 0, 0);
 	border: none;
 	width:150px;
 	cursor: pointer;
+	border: rgb(0, 64, 0) 1px;
 	border-radius: 8px;
 }
 /* 送信ボタン(マウスオーバー時) */
 button:hover {
-	background-color: #f1b2b2;
+	background-color: rgb(255, 255, 128);
 }
 
 .linkNew {
@@ -91,7 +94,7 @@ button:hover {
 .tabContainer {
 	margin-bottom: 0;
 	width: 100%;
-	background-color:#FFF;
+	background-color:rgb(0, 47, 16);
 }
 
 .linkNav {
@@ -216,7 +219,7 @@ h2 {
     color: #FFF;
     text-decoration: none;
     text-align: center;
-	border-radius: 20px;
+	border-radius: 10px;
 	line-height: 5em;
 }
 .linkButton:hover{

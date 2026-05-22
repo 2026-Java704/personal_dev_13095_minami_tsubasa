@@ -10,9 +10,12 @@
 		<h1>計上履歴照会</h1>
 		<!--タブを作る-->
 		<div class="tabContainer">
-			<a href="#total" class="linkNav">日別詳細</a>
-			<a href="#dash-boad" class="linkNav">日別詳細</a>
-			<a href="#record-list" class="linkNav">日別詳細</a>
+			<div>こんにちは <span th:text="${userName}"></span>さん</div>
+			<a href="#total" class="linkNav">収支確認</a>
+			<a href="#dash-boad" class="linkNav">科目別</a>
+			<a href="#record-list" class="linkNav">計上記録</a>
+			<a href="/items/detail" class="linkNav">日別確認</a>
+			<a href="#" class="linkNav">科目定義</a>
 			<a href="/login" class="linkNav">ログアウト</a>
 		</div>
 	</header>

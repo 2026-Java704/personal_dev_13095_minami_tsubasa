@@ -13,37 +13,38 @@
 	<header>
 		<h1>日別利用実績</h1>
 	</header>
-	<button id="openDate">当月実績</button>
-	<div class="viewContainer">
-		<div id="calendar"></div>
-	</div>
-	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/locales-all.global.min.js"></script>
-	
-	<!--モーダルで詳細 ボタンはJSで発行-->
-	<input type="checkbox" id="modalToggle" class="modal-checkbox">
-	<div class="modal" id="modal">
-	  <div class="modal-wrapper">
-	    <label for="modalToggle" class="close">&times;</label>
-	    <div class="modal-content">
-	      <h1 id="itemTitle">例：家賃</h1>
-	      <p>
-			<table border="1" id="modalTable">
-				<tr>
-					<th>科目名</th><td id="genreTitle">費用</td>
-				</tr>
-				<tr>
-					<th>金額</th><td id="priceInfo"></td>
-				</tr>
-				<tr>
-					<th>備考</th><td id="commentView">費用</td>
-				</tr>
-			</table>
-			<a id="reciptView" href="#" class="linkRecipt">領収書を表示</a>
-		</p>
-	    </div>
-	  </div>
-	</div>
+		<main>
+		<div class="viewContainer">
+			<div id="calendar"></div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/locales-all.global.min.js"></script>
+		
+		<!--モーダルで詳細 ボタンはJSで発行-->
+		<input type="checkbox" id="modalToggle" class="modal-checkbox">
+		<div class="modal" id="modal">
+		  <div class="modal-wrapper">
+		    <label for="modalToggle" class="close">&times;</label>
+		    <div class="modal-content">
+		      <h1 id="itemTitle">例：家賃</h1>
+		      <p>
+				<table border="1" id="modalTable">
+					<tr>
+						<th>科目名</th><td id="genreTitle">費用</td>
+					</tr>
+					<tr>
+						<th>金額</th><td id="priceInfo"></td>
+					</tr>
+					<tr>
+						<th>備考</th><td id="commentView">費用</td>
+					</tr>
+				</table>
+				<a id="reciptView" href="#" class="linkRecipt">領収書を表示</a>
+			</p>
+		    </div>
+		  </div>
+		</div>
+	</main>
 	
 	<script th:inline="javascript">
 		
