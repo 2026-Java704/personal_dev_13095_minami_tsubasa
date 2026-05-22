@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>MONEY-ARROWS</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+	<header>
+		<h1>計上履歴照会</h1>
+		<!--タブを作る-->
+		<div class="tabContainer">
+			<div>こんにちは <span th:text="${userName}"></span>さん</div>
+			<a href="/items#total" class="linkNav">収支確認</a>
+			<a href="/items#dash-boad" class="linkNav">科目別</a>
+			<a href="/items#record-list" class="linkNav">計上記録</a>
+			<a href="/items/detail" class="linkNav">日別確認</a>
+			<a href="#" class="linkNav">科目定義</a>
+			<a href="/login" class="linkNav">ログアウト</a>
+		</div>
+	</header>
+	
+	<main>
+		
+		<div id="record-list" class="viewContainer">
+			
+			<table border="1">
+				<tr>
+					<th>登録ID</th>
+					<th>科目</th>
+					<th>入金科目</th>
+					<th>備考</th>
+					<th>更新</th>
+					<th>削除</th>
+				</tr>
+				<tr th:each="genre:${genres}">
+					<!--表の商品へのリンク付けはThymeleafのタグ外書き込みで対応可能-->
+					<td th:text="${genre.id}"></td>
+					<td th:text="${genre.genreName}"></td>
+					<td th:text="${genre.isIncome}"></td>
+					<td th:text="${genre.comments}"></td>
+					<td>
+						<form th:action="@{/genres/{genreId}/edit(genreId=${genre.id})}" method="get">
+							<button>更新</button>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/genre/{genreId}/delete(genreId=${genre.id})}" method="post">
+							<button>削除</button>
+						</form>
+					</td>
+				</tr>
+			</table>
+			<a href="/genres/add" class="linkAdd">科目の追加</a>
+		</div>
+	</main>
+		
+</body>
+</html>

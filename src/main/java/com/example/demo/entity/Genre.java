@@ -18,16 +18,19 @@ public class Genre {
 	private String genreName; // 名前
 
 	@Column(name = "is_income")
-	private boolean isIncome; // メールアドレス
+	private boolean isIncome; // 収入か支出か
+
+	private String comments; // 科目の概要など
 
 	// コンストラクタ
 	public Genre() {
 	}
 
-	public Genre(String genreName, boolean isIncome) {
+	public Genre(String genreName, boolean isIncome, String comments) {
 		this.genreName = genreName;
 
 		this.isIncome = isIncome;
+		this.comments = comments;
 	}
 
 	public Integer getId() {
@@ -52,6 +55,14 @@ public class Genre {
 
 	public void setIncome(boolean isIncome) {
 		this.isIncome = isIncome;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 
 }

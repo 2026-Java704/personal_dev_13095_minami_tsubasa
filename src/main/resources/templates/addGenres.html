@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>科目追加</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+	<header>
+		<h1>科目追加</h1>
+		<!--タブを作る-->
+		<div class="tabContainer">
+			<div>こんにちは <span th:text="${userName}"></span>さん</div>
+			<a href="/items#total" class="linkNav">収支確認</a>
+			<a href="/items#dash-boad" class="linkNav">科目別</a>
+			<a href="/items#record-list" class="linkNav">計上記録</a>
+			<a href="/items/detail" class="linkNav">日別確認</a>
+			<a href="/genres" class="linkNav">科目定義</a>
+			<a href="/login" class="linkNav">ログアウト</a>
+		</div>
+	</header>
+		
+	<hr>
+	<main>
+		<div class="viewContainer">
+			<h3>計上に使用する勘定科目を追加します</h3>
+	
+			<form action="/genres/add" method="post">
+				<table border="1">
+					<tr>
+					<th>科目名</th>
+						<td>
+							<input type="text" name="genreName" th:value="${setSubject}">
+						</td>
+					</tr>
+					<tr>
+						<th>収入</th>
+						<td>
+							<input type="radio" name="isIncome" value="false" checked>出金<br>
+							<input type="radio" name="isIncome" value="true">入金
+						</td>
+					</tr>
+					<tr>
+						<th>備考</th>
+						<td>
+							<input type="text" name="comments" th:value="${setComment}">
+						</td>
+					</tr>
+	
+				</table>
+				<button>登録</button>
+			</form>
+		</div>
+	</main>
+
+</body>
+</html>

@@ -236,33 +236,35 @@ public class ItemController {
 
 		Genre genre = genreRepository.findById(genreId).get();
 		User user = userRepository.findById(account.getId()).get();
+		Item item = new Item();
 
-		// 保存先
-		String uploadDir = "src/main/resources/static/images/";
+		if (!(file == null || file.isEmpty())) {
+			// 保存先
+			String uploadDir = "src/main/resources/static/images/";
 
-		// 元ファイル名
-		String fileName = file.getOriginalFilename();
+			// 元ファイル名
+			String fileName = file.getOriginalFilename();
 
-		/*
-		 * アップロード時の重複防止のため
-		 * 自動で変換する処理を行う。
-		 * 拡張子を取得
-		 * */
-		String extension = fileName != null ? fileName.substring(fileName.lastIndexOf(".")) : "";
+			/*
+			 * アップロード時の重複防止のため
+			 * 自動で変換する処理を行う。
+			 * 拡張子を取得
+			 * */
+			String extension = fileName != null ? fileName.substring(fileName.lastIndexOf(".")) : "";
 
-		// リネームしたい新しいファイル名を指定 (例: recipt-2026-05-21-173625.png
-		String newFileName = fileNameGenerate() + extension;
+			// リネームしたい新しいファイル名を指定 (例: recipt-2026-05-21-173625.png
+			String newFileName = fileNameGenerate() + extension;
 
-		// 保存先生成
-		Path filePath = Paths.get(uploadDir + newFileName);
+			// 保存先生成
+			Path filePath = Paths.get(uploadDir + newFileName);
 
-		// ファイル保存
-		Files.copy(file.getInputStream(), filePath);
+			// ファイル保存
+			Files.copy(file.getInputStream(), filePath);
 
-		// DB保存用URL
-		String reciptImage = "/images/" + newFileName;
-
-		Item item = new Item(itemName, user, genre, price, addDate, comment, reciptImage);
+			// DB保存用URL
+			String reciptImage = "/images/" + newFileName;
+			item.setReciptImage(reciptImage);
+		}
 
 		if (addDate == null || itemName == null || genreId == null || price == null || file == null) {
 			model.addAttribute("inputErr", "入力項目に不足があります。");
@@ -286,6 +288,13 @@ public class ItemController {
 				return "addItems";
 			}
 		}
+
+		item.setAddDate(addDate);
+		item.setItemName(itemName);
+		item.setGenre(genre);
+		item.setUser(user);
+		item.setPrice(price);
+		item.setComment(comment);
 
 		itemRepository.save(item);
 
@@ -352,30 +361,33 @@ public class ItemController {
 			}
 		}
 
-		// 保存先
-		String uploadDir = "src/main/resources/static/images/";
+		if (!(file == null || file.isEmpty())) {
+			// 保存先
+			String uploadDir = "src/main/resources/static/images/";
 
-		// 元ファイル名
-		String fileName = file.getOriginalFilename();
+			// 元ファイル名
+			String fileName = file.getOriginalFilename();
 
-		/*
-		 * アップロード時の重複防止のため
-		 * 自動で変換する処理を行う。
-		 * 拡張子を取得
-		 * */
-		String extension = fileName != null ? fileName.substring(fileName.lastIndexOf(".")) : "";
+			/*
+			 * アップロード時の重複防止のため
+			 * 自動で変換する処理を行う。
+			 * 拡張子を取得
+			 * */
+			String extension = fileName != null ? fileName.substring(fileName.lastIndexOf(".")) : "";
 
-		// リネームしたい新しいファイル名を指定 (例: recipt-2026-05-21-173625.png
-		String newFileName = fileNameGenerate() + extension;
+			// リネームしたい新しいファイル名を指定 (例: recipt-2026-05-21-173625.png
+			String newFileName = fileNameGenerate() + extension;
 
-		// 保存先生成
-		Path filePath = Paths.get(uploadDir + newFileName);
+			// 保存先生成
+			Path filePath = Paths.get(uploadDir + newFileName);
 
-		// ファイル保存
-		Files.copy(file.getInputStream(), filePath);
+			// ファイル保存
+			Files.copy(file.getInputStream(), filePath);
 
-		// DB保存用URL
-		String reciptImage = "/images/" + newFileName;
+			// DB保存用URL
+			String reciptImage = "/images/" + newFileName;
+			item.setReciptImage(reciptImage);
+		}
 
 		item.setAddDate(addDate);
 		item.setItemName(itemName);
@@ -383,7 +395,6 @@ public class ItemController {
 		item.setUser(user);
 		item.setPrice(price);
 		item.setComment(comment);
-		item.setReciptImage(reciptImage);
 
 		// 更新した情報を保存
 		itemRepository.save(item);
