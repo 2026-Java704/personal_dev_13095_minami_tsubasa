@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Item;
 import com.example.demo.model.Account;
@@ -43,6 +44,16 @@ public class dateController {
 		model.addAttribute("items", itemList);
 
 		return "dateView";
+	}
+
+	// レシートリンクを踏んだらHTMLに遷移
+	@GetMapping("/items/recipt")
+	public String genre(
+			@RequestParam(defaultValue = "") String reciptURL,
+			Model model) {
+
+		model.addAttribute("reciptURL", reciptURL);
+		return "recipt";
 	}
 
 }

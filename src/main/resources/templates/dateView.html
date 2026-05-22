@@ -41,7 +41,12 @@
 						<th>備考</th><td id="commentView">費用</td>
 					</tr>
 				</table>
-				<a id="reciptView" href="#" class="linkRecipt">領収書を表示</a>
+				
+
+				<form action="/items/recipt" method="get">
+					<input type="hidden" id="reciptView" name="reciptURL">
+					<button id="isRecipt">表示</button>
+				</form> 
 			</p>
 		    </div>
 		  </div>
@@ -107,12 +112,14 @@
 				  }
 				  
 				  const RECIPT_LINK = document.getElementById('reciptView');
+				  const IS_RECIPUT_LINK = document.getElementById('isRecipt');
 				  
 				  if (GET_IMAGE == null) {
-					RECIPT_LINK.href = "";
-					RECIPT_LINK.innerHTML = "領収書はありません"		
+
+					IS_RECIPT_LINK.disabled = false;		
 				  } else {
-				 	RECIPT_LINK.href = GET_IMAGE;
+					RECIPT_LINK.value = GET_IMAGE;
+					IS_RECIPT_LINK.disabled = true;
 				  }
 			    }
 			});

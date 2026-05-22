@@ -363,7 +363,7 @@ input, select {
 }
 
 .file-button::file-selector-button {
-
+	display: inline-block;
 	width: 10em;
     padding: 10px 20px;
     margin: 0 auto;
@@ -372,6 +372,13 @@ input, select {
     text-decoration: none;
     text-align: center;
 	border-radius: 20px;
+	border: none;
+}
+.file-button::file-selector-button:hover {
+
+    background: rgb(255, 0, 0);
+    color: #FFF;
+
 }
 
 .genrePriceView {

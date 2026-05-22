@@ -9,15 +9,7 @@
 	<header>
 		<h1>科目追加</h1>
 		<!--タブを作る-->
-		<div class="tabContainer">
-			<div>こんにちは <span th:text="${userName}"></span>さん</div>
-			<a href="/items#total" class="linkNav">収支確認</a>
-			<a href="/items#dash-boad" class="linkNav">科目別</a>
-			<a href="/items#record-list" class="linkNav">計上記録</a>
-			<a href="/items/detail" class="linkNav">日別確認</a>
-			<a href="/genres" class="linkNav">科目定義</a>
-			<a href="/login" class="linkNav">ログアウト</a>
-		</div>
+		<div th:replace="~{tabContainer}"></div>
 	</header>
 		
 	<hr>
