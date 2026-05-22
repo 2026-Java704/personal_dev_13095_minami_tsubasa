@@ -112,6 +112,56 @@ meter::-webkit-meter-even-less-good-value {
   background: #f44336; /* 良くないときの色 */
 }
 
+/* --- Chrome, Safari, Edge --- */
+/* メーターの背景部分 */
+meter::-webkit-meter-bar {
+  background: rgb(192, 192, 192);
+  box-shadow: inset  rgb(180, 175, 175);
+}
+
+/* メーターの値（ゲージ）部分 */
+meter::-webkit-meter-optimum-value {
+  background: linear-gradient(90deg, rgb(0, 0, 160) 0%, rgb(0, 0, 160) 100%);
+}
+
+
+meter::-webkit-meter-suboptimum-value {
+  background: rgb(0, 128, 0); /* やや低い・高いときの色 */
+}
+
+meter::-webkit-meter-even-less-good-value {
+  background: rgb(255, 0, 0); /* 良くないときの色 */
+}
+
+
+/*
+ダッシュボードの一覧表
+*/
+.dashBoadMeter {
+  display: flex;
+  /* 全体のサイズと見た目のリセット */
+  width: 20em;
+  margin: 0 0 0 0;
+  padding: 0;
+  height: 4em;
+  border: none;
+}
+
+/* メーターの値（ゲージ）部分 */
+.dashBoadMeter::-webkit-meter-optimum-value {
+  background: rgb(255, 0, 0);
+}
+
+
+.dashBoadMeter::-webkit-meter-suboptimum-value {
+  background: rgb(255, 128, 0); /* やや低い・高いときの色 */
+}
+
+.dashBoadMeter::-webkit-meter-even-less-good-value {
+  background: rgb(0, 128, 0); /* 良くないときの色 */
+}
+
+
 h2 {
 	line-height: 0.5em;
 	font-size: 2.5em;
@@ -176,6 +226,8 @@ h2 {
 	padding-bottom: 3em;
 	align-items: center;
 }
+
+
 
 
 /*
@@ -290,4 +342,7 @@ input, select {
 	border-radius: 20px;
 }
 
+.genrePriceView {
+	font-size: 2.5em;
+}
 

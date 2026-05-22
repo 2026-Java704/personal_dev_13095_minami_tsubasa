@@ -8,7 +8,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -114,6 +116,35 @@ public class ItemController {
 		return itemDate;
 	}
 
+	public Map<String, Integer> subjectView(LocalDate initDate, LocalDate finalDate, Model model) {
+		// ここからジャンルごとの合計金額を出せるように
+		Map<String, Integer> genreMap = new HashMap<String, Integer>();
+
+		List<Item> itemList = itemRepository.findByUserIdAndAddDateBetween(account.getId(), initDate, finalDate);
+		for (Item item : itemList) {
+
+			String genreName = item.getGenre().getGenreName();
+			Integer genrePrice = item.getPrice();
+
+			// メータで表示するため、絶対t表現を行う。
+			if (!item.getGenre().getIsIncome()) {
+				genrePrice *= -1;
+			} else {
+				continue;
+			}
+
+			if (genreMap.containsKey(genreName)) {
+				genreMap.put(genreName, genreMap.get(genreName) + genrePrice);
+			} else {
+				genreMap.put(genreName, genrePrice);
+			}
+		}
+
+		System.out.println(genreMap);
+
+		return genreMap;
+	}
+
 	@GetMapping("/items")
 	public String index(
 
@@ -154,6 +185,10 @@ public class ItemController {
 
 		// 当月期間の収支を表示
 		incomeBalanceView(itemList, initDate, finalDate, model);
+
+		Map<String, Integer> genreTotal = subjectView(initDate, finalDate, model);
+
+		model.addAttribute("genreTotal", genreTotal);
 
 		return "items";
 	}
@@ -398,6 +433,10 @@ public class ItemController {
 		model.addAttribute("setInitDate", initDate);
 		model.addAttribute("setFinalDate", finalDate);
 		model.addAttribute("items", itemList);
+
+		Map<String, Integer> genreTotal = subjectView(initDate, finalDate, model);
+
+		model.addAttribute("genreTotal", genreTotal);
 		return "items";
 	}
 

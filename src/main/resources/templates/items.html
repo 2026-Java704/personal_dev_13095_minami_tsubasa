@@ -34,12 +34,27 @@
 			<span id="maxItem">（[[${maxItem}]]）</span>
 		</h2>
 		
-		<meter class="custom-meter" th:attr="value=${totalBalance}, min=0, max=${totalIncome}, low=0, high=${totalIncome * 0.6}" 
+		<meter class="custom-meter" th:attr="value=${totalBalance}, min=0, max=${totalIncome}, low=${totalIncome * 0.3}, high=${totalIncome * 0.5}, optimum=${totalIncome * 0.7}" 
 		       th:text="${totalBalance} + '円'">
 		</meter>
 		<p th:text="${alert}" class="alertView"></p>
 		<a href="/items/add" class="linkAdd">新規計上</a>
 		<a href="/items/detail" class="linkAdd">日別詳細</a>
+	</div>
+	<div class="viewContainer">
+		<h2>指定範囲実績</h2>
+		<table class="dashboad"border="1">
+			<tr><th>科目名</th><th>指定期間支出（円）</th><th>収支</th></tr>
+			<tr th:each="genre:${genreTotal}">
+				<th th:text="${genre.key}"></th>
+				<td class="genrePriceView" th:text="${#numbers.formatInteger(genre.Value, 3, 'COMMA')}"></td>
+				<td>
+					<meter class="dashBoadMeter" th:attr="value=${genre.value}, min=0, max=${totalIncome}, low=${totalIncome * 0.4}, high=${totalIncome * 0.6}, optimum=${totalIncome * 0.8}" 
+					       th:text="${genre.value} + '円'">
+					</meter>
+				</td>
+			</tr>
+		</table>
 	</div>
 	
 	<div class="viewContainer">

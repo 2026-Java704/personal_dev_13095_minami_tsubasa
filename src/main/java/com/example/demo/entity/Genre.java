@@ -46,7 +46,7 @@ public class Genre {
 		this.genreName = genreName;
 	}
 
-	public boolean isIncome() {
+	public boolean getIsIncome() {
 		return isIncome;
 	}
 
