@@ -53,7 +53,7 @@ public class Genre {
 		return isIncome;
 	}
 
-	public void setIncome(boolean isIncome) {
+	public void setIsIncome(boolean isIncome) {
 		this.isIncome = isIncome;
 	}
 

@@ -8,41 +8,48 @@
 <body>
 	<header>
 		<h1>計上情報更新</h1>
+		<div th:replace="~{tabContainer}"></div>
 	</header>
-	<div class="viewContainer">
-		<p class="status">情報を編集します。</p>
-		<br> <span th:text="${inputErr}" style="color: red"></span>
-		<br> <span th:text="${priceErr}" style="color: red"></span>
-		<form th:action="@{/genres/{genresId}/edit(genresId=${genres.id})}" method="post"
-		enctype="multipart/form-data">
-			<table border="1">
-				<tr>
-					<th>記録ID</th>
-					<td th:text="${genres.id}"></td>
-				</tr>
-				
-				<tr>
-					<th>科目名</th>
-					<td>
-						<input type="text" name="genreName" th:value="${genres.genreName}">
-					</td>
-				</tr>
-				<tr>
-					<th>収入</th>
-					<td>
-						<input type="radio" name="isIncome" value="false" checked>出金<br>
-						<input type="radio" name="isIncome" value="true">入金
-					</td>
-				</tr>
-				<tr>
-					<th>備考</th>
-					<td>
-						<input type="text" name="comments" th:value="${genres.comments}">
-					</td>
-				</tr>
-			</table>
-			<button>更新</button>
-		</form>
-	</div>
+	<main>
+		<div class="viewContainer">
+			<p class="status">情報を編集します。</p>
+			<p style="color:red;">
+				変更・削除した場合は<br>
+				過去の実績の訂正を行う必要があります。
+			</p>
+			<br> <span th:text="${inputErr}" style="color: red"></span>
+			<br> <span th:text="${priceErr}" style="color: red"></span>
+			<form th:action="@{/genres/{genresId}/edit(genresId=${genres.id})}" method="post"
+			enctype="multipart/form-data">
+				<table border="1">
+					<tr>
+						<th>記録ID</th>
+						<td th:text="${genres.id}"></td>
+					</tr>
+					
+					<tr>
+						<th>科目名</th>
+						<td>
+							<input type="text" name="genreName" th:value="${genres.genreName}">
+						</td>
+					</tr>
+					<tr>
+						<th>収入</th>
+						<td>
+							<input type="radio" name="isIncome" value="false" checked>出金<br>
+							<input type="radio" name="isIncome" value="true">入金
+						</td>
+					</tr>
+					<tr>
+						<th>備考</th>
+						<td>
+							<input type="text" name="comments" th:value="${genres.comments}">
+						</td>
+					</tr>
+				</table>
+				<button>更新</button>
+			</form>
+		</div>
+	</main>
 </body>
 </html>

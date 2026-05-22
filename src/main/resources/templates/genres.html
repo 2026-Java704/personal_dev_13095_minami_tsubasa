@@ -7,23 +7,19 @@
 </head>
 <body>
 	<header>
-		<h1>計上履歴照会</h1>
+		<h1>科目情報更新</h1>
 		<!--タブを作る-->
-		<div class="tabContainer">
-			<div>こんにちは <span th:text="${userName}"></span>さん</div>
-			<a href="/items#total" class="linkNav">収支確認</a>
-			<a href="/items#dash-boad" class="linkNav">科目別</a>
-			<a href="/items#record-list" class="linkNav">計上記録</a>
-			<a href="/items/detail" class="linkNav">日別確認</a>
-			<a href="#" class="linkNav">科目定義</a>
-			<a href="/login" class="linkNav">ログアウト</a>
-		</div>
+		<div th:replace="~{tabContainer}"></div>
 	</header>
 	
 	<main>
 		
 		<div id="record-list" class="viewContainer">
-			
+			<p class="status">科目一覧</p>
+			<p style="color:red;">
+				変更・削除した場合は<br>
+				過去の実績の訂正を行う必要があります。
+			</p>
 			<table border="1">
 				<tr>
 					<th>登録ID</th>

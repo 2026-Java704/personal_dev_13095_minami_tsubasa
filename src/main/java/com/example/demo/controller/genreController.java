@@ -114,9 +114,22 @@ public class genreController {
 			return "redirect:/items/{id}/edit";
 		}
 
-		Genre genreEdit = new Genre(genreName, isIncome, comments);
+		genre.setGenreName(genreName);
+		genre.setIsIncome(isIncome);
+		genre.setComments(comments);
 
-		genreRepository.save(genreEdit);
+		genreRepository.save(genre);
+		return "redirect:/genres";
+	}
+
+	// 削除処理
+	@PostMapping("/genres/{id}/delete")
+	public String delete(@PathVariable Integer id) {
+
+		// 更新した情報を削除
+		// リポジトリ名.deleteByデータベースフィールド名で指定
+		genreRepository.deleteById(id);
+
 		return "redirect:/genres";
 	}
 }
