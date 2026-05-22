@@ -8,94 +8,98 @@
 <body>
 	<header>
 		<h1>計上履歴照会</h1>
+		<!--タブを作る-->
+		<div class="tabContainer">
+			<a href="#total" class="linkNav">日別詳細</a>
+			<a href="#dash-boad" class="linkNav">日別詳細</a>
+			<a href="#record-list" class="linkNav">日別詳細</a>
+			<a href="/login" class="linkNav">ログアウト</a>
+		</div>
 	</header>
-	<!--５月２２日の対応
-		ログアウト・セッションによる名前表示
-		カレンダーに期間別（1・15・25日の給料日開始で）
-		いくら使っているか？が表示できるように。
-		一応業務システムの形に添って手動入力での検索ができるようにしている。
-	-->
-	<div class="viewContainer">
-		<br> <span th:text="${searchErr}" style="color: red"></span>
-		<form action="/sort" method="post">
-			<input type="date" name="initDate" th:value="${setInitDate}">～
-			<input type="date" name="finalDate"th:value="${setFinalDate}">期間分
-			<button>照会</button>
-		</form>
-		<p class="status">指定期間残高</p>
-		<h2>
-			<span id="balance">[[${#numbers.formatInteger(totalBalance, 3, 'COMMA')}]] 円</span>
-			<span id="expense">/ [[${#numbers.formatInteger(totalExpense, 3, 'COMMA')}]] 円 使用済み</span>
-		</h2>
-		<p class="status">当月収入 / 最大出費</p>
-		<h2>
-			<span id="income">[[${#numbers.formatInteger(totalIncome, 3, 'COMMA')}]] 円</span>
-			<span id="maxPrice">[[${#numbers.formatInteger(maxPrice, 3, 'COMMA')}]] 円</span>
-			<span id="maxItem">（[[${maxItem}]]）</span>
-		</h2>
-		
-		<meter class="custom-meter" th:attr="value=${totalBalance}, min=0, max=${totalIncome}, low=${totalIncome * 0.3}, high=${totalIncome * 0.5}, optimum=${totalIncome * 0.7}" 
-		       th:text="${totalBalance} + '円'">
-		</meter>
-		<p th:text="${alert}" class="alertView"></p>
-		<a href="/items/add" class="linkAdd">新規計上</a>
-		<a href="/items/detail" class="linkAdd">日別詳細</a>
-	</div>
-	<div class="viewContainer">
-		<h2>指定範囲実績</h2>
-		<table class="dashboad"border="1">
-			<tr><th>科目名</th><th>指定期間支出（円）</th><th>収支</th></tr>
-			<tr th:each="genre:${genreTotal}">
-				<th th:text="${genre.key}"></th>
-				<td class="genrePriceView" th:text="${#numbers.formatInteger(genre.Value, 3, 'COMMA')}"></td>
-				<td>
-					<meter class="dashBoadMeter" th:attr="value=${genre.value}, min=0, max=${totalIncome}, low=${totalIncome * 0.4}, high=${totalIncome * 0.6}, optimum=${totalIncome * 0.8}" 
-					       th:text="${genre.value} + '円'">
-					</meter>
-				</td>
-			</tr>
-		</table>
-	</div>
 	
-	<div class="viewContainer">
-		<a href="/items" class="linkButton">全項目</a>
-			<a th:each="genre:${genres}"
-			   th:href="@{/items(genreId=${genre.id})}"
-			   th:text="${genre.genreName}"
-			   style="margin-right: 5px;" class="linkButton">
-		 	</a>
-		<br>
-		<table border="1">
-			<tr>
-				<th>日付</th>
-				<th>名前</th>
-				<th>科目</th>
-				<th>金額(円)</th>
-				<th>コメント</th>
-				<th>更新</th>
-				<th>削除</th>
-			</tr>
-			<tr th:each="item:${items}">
-				<!--表の商品へのリンク付けはThymeleafのタグ外書き込みで対応可能-->
-				<td th:text="${item.addDate}"></td>
-				<td th:text="${item.itemName}"></td>
-				<td th:text="${item.genre.genreName}"></td>
-				<td th:text="${item.price}"></td>
-				<td th:text="${item.comment}"></td>
-				<td>
-					<form th:action="@{/items/{itemId}/edit(itemId=${item.id})}" method="get">
-						<button>更新</button>
-					</form>
-				</td>
-				<td>
-					<form th:action="@{/items/{itemId}/delete(itemId=${item.id})}" method="post">
-						<button>削除</button>
-					</form>
-				</td>
-			</tr>
-
-		</table>
-	</div>
+	<main>
+		<div id="total" class="viewContainer">
+			<br> <span th:text="${searchErr}" style="color: red"></span>
+			<form action="/sort" method="post">
+				<input type="date" name="initDate" th:value="${setInitDate}">～
+				<input type="date" name="finalDate"th:value="${setFinalDate}">期間分
+				<button>照会</button>
+			</form>
+			<p class="status">指定期間残高</p>
+			<h2>
+				<span id="balance">[[${#numbers.formatInteger(totalBalance, 3, 'COMMA')}]] 円</span>
+				<span id="expense">/ [[${#numbers.formatInteger(totalExpense, 3, 'COMMA')}]] 円 使用済み</span>
+			</h2>
+			<p class="status">当月収入 / 最大出費</p>
+			<h2>
+				<span id="income">[[${#numbers.formatInteger(totalIncome, 3, 'COMMA')}]] 円</span>
+				<span id="maxPrice">[[${#numbers.formatInteger(maxPrice, 3, 'COMMA')}]] 円</span>
+				<span id="maxItem">（[[${maxItem}]]）</span>
+			</h2>
+			
+			<meter class="custom-meter" th:attr="value=${totalBalance}, min=0, max=${totalIncome}, low=${totalIncome * 0.3}, high=${totalIncome * 0.5}, optimum=${totalIncome * 0.7}" 
+			       th:text="${totalBalance} + '円'">
+			</meter>
+			<p th:text="${alert}" class="alertView"></p>
+			<a href="/items/add" class="linkAdd">新規計上</a>
+			<a href="/items/detail" class="linkAdd">日別詳細</a>
+		</div>
+		<div id="dash-boad" class="viewContainer">
+			<h2>指定範囲実績</h2>
+			<table class="dashboad"border="1">
+				<tr><th>科目名</th><th>指定期間支出（円）</th><th>収支</th></tr>
+				<tr th:each="genre:${genreTotal}">
+					<th th:text="${genre.key}"></th>
+					<td class="genrePriceView" th:text="${#numbers.formatInteger(genre.Value, 3, 'COMMA')}"></td>
+					<td>
+						<meter class="dashBoadMeter" th:attr="value=${genre.value}, min=0, max=${totalIncome}, low=${totalIncome * 0.4}, high=${totalIncome * 0.6}, optimum=${totalIncome * 0.8}" 
+						       th:text="${genre.value} + '円'">
+						</meter>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<div id="record-list" class="viewContainer">
+			<a href="/items" class="linkButton">全項目</a>
+				<a th:each="genre:${genres}"
+				   th:href="@{/items(genreId=${genre.id})}"
+				   th:text="${genre.genreName}"
+				   style="margin-right: 5px;" class="linkButton">
+			 	</a>
+			<br>
+			<table border="1">
+				<tr>
+					<th>日付</th>
+					<th>名前</th>
+					<th>科目</th>
+					<th>金額(円)</th>
+					<th>コメント</th>
+					<th>更新</th>
+					<th>削除</th>
+				</tr>
+				<tr th:each="item:${items}">
+					<!--表の商品へのリンク付けはThymeleafのタグ外書き込みで対応可能-->
+					<td th:text="${item.addDate}"></td>
+					<td th:text="${item.itemName}"></td>
+					<td th:text="${item.genre.genreName}"></td>
+					<td th:text="${item.price}"></td>
+					<td th:text="${item.comment}"></td>
+					<td>
+						<form th:action="@{/items/{itemId}/edit(itemId=${item.id})}" method="get">
+							<button>更新</button>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/items/{itemId}/delete(itemId=${item.id})}" method="post">
+							<button>削除</button>
+						</form>
+					</td>
+				</tr>
+	
+			</table>
+		</div>
+	</main>
 		
 </body>
 </html>

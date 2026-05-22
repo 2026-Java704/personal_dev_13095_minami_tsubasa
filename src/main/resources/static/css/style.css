@@ -10,21 +10,24 @@ body {
 	font-weight: 600;
 }
 /* ヘッダー、ナビゲーションメニュー、フッター */
-header, nav, footer {
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
 	background-color: rgb(0, 64, 64); /* 背景色 */
 	color: rgb(255, 255, 128); /* 文字色 */
-	padding-top: 5px; /* 内側余白(上) */
-	padding-bottom: 5px; /* 内側余白(下) */
-	position: sticky;
+	padding-top: 2px; /* 内側余白(上) */
+	z-index: 1000;
 }
 /* ヘッダー、ナビゲーション内リンク */
-header a, nav a {
+header a {
 	color: #ffffff;
 }
 /* ヘッダー内見出し */
 header h1 {
 	font-size: 3.5em;
-	margin: 10px auto;
+	margin: 5px auto;
 }
 /* 仕切り線 */
 hr {
@@ -32,8 +35,7 @@ hr {
 }
 /* メイン */
 main {
-	background-color: #FFFFFF;
-	min-height: 50px;
+	margin-top: 8em;
 	padding: 20px;
 }
 /* 表線 */
@@ -81,6 +83,32 @@ button:hover {
 
 .linkNew:hover{
     background: rgb(255, 0, 0);
+}
+
+/*
+タブのデザイン
+*/
+.tabContainer {
+	margin-bottom: 0;
+	width: 100%;
+	background-color:#FFF;
+}
+
+.linkNav {
+	display: inline-block;
+    width: 8em;
+
+    padding: 5px 24px;
+    margin: 0.5em auto;
+    background: rgb(0, 64, 31);
+    color: #FFF;
+    text-decoration: none;
+    text-align: center;
+	border-radius: 10px;
+}
+
+.linkNav:hover{
+    background: rgb(0, 128, 64);
 }
 
 meter {
@@ -219,6 +247,7 @@ h2 {
 
 /*各カードの要素を作る*/
 .viewContainer {
+	scroll-margin-top: 10em;
 	background-color: rgb(255, 253, 242);
 	border-radius: 15px;
 	margin: 3em 10em 0 10em; 
