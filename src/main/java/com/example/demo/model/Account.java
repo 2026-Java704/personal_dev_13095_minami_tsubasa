@@ -9,6 +9,7 @@ public class Account {
 
 	private String name;
 	private Integer id;
+	private String email;
 
 	public String getName() {
 		return name;
@@ -25,4 +26,13 @@ public class Account {
 	public Integer getId() {
 		return id;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 }

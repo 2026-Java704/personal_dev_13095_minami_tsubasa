@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ユーザ情報</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+	<header>
+		<h1>ユーザ情報更新</h1>
+		<div th:replace="~{tabContainer}"></div>
+	</header>
+	<main>
+		<div class="viewContainer">
+			<p class="status">アカウント情報を更新します</p>
+
+			<form action="/account/update" method="post">
+				<table border="1">
+					<tr>
+						<th>ユーザID</th>
+						<td th:text="${userId}"></td>
+					</tr>
+					
+					<tr>
+						<th>名前</th>
+						<td>
+							<input type="text" name="userName" th:value="${userName}">
+						</td>
+					</tr>
+					<tr>
+						<th>E-mail</th>
+						<td>
+							<input type="text" name="userEmail" th:value="${userEmail}">
+						</td>
+					</tr>
+				</table>
+				<button>更新</button>
+			</form>
+		</div>
+	</main>
+</body>
+</html>

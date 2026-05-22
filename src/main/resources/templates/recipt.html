@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>レシート</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+	<header>
+		<h1>レシート：</h1>
+		<!--タブを作る-->
+		<div th:replace="~{tabContainer}"></div>
+	</header>
+		
+	<hr>
+	<main>
+		<div class="viewContainer">
+			<h3>ここにファイル名が張ります</h3>
+			<img th:src="${reciptURL}" alt="レシート画像">
+		</div>
+	</main>
+
+</body>
+</html>

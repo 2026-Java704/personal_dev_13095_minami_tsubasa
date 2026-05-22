@@ -73,7 +73,8 @@ public class UserController {
 
 			// セッション管理されたアカウント情報に名前をセット
 			// 検索されたリストは１件なので、０番目をとる。
-			account.setName(findAccount.get(0).getName());
+			account.setName(findAccount.get(0).getUserName());
+			account.setEmail(findAccount.get(0).getEmail());
 			account.setId(findAccount.get(0).getId());
 
 			// items.htmlに引き継ぎ、その後の注文画面に引き継ぐ
@@ -90,8 +91,6 @@ public class UserController {
 	@PostMapping("/register")
 	public String store(
 			@RequestParam(defaultValue = "") String name,
-			@RequestParam(defaultValue = "") String address,
-			@RequestParam(defaultValue = "") String tel,
 			@RequestParam(defaultValue = "") String email,
 			@RequestParam(defaultValue = "") String password,
 			@RequestParam(defaultValue = "") String passwordConfilm,
@@ -140,5 +139,36 @@ public class UserController {
 		userRepository.save(user);
 		// リダイレクト
 		return "redirect:/login";
+	}
+
+	// ログイン画面を表示
+	@GetMapping("/account")
+	public String accountGet(Model model) {
+
+		// 表示させる
+		model.addAttribute("userId", account.getId());
+		model.addAttribute("userName", account.getName());
+		model.addAttribute("userEmail", account.getEmail());
+
+		return "accountInfo";
+	}
+
+	// ログイン画面を表示
+	@PostMapping("/account/update")
+	public String accountSet(
+			@RequestParam(defaultValue = "") String userName,
+			@RequestParam(defaultValue = "") String userEmail,
+			Model model) {
+
+		Integer userId = account.getId();
+
+		User user = userRepository.findById(userId).get();
+
+		user.setUserName(userName);
+		user.setUserEmail(userEmail);
+
+		userRepository.save(user);
+
+		return "redirect:/items";
 	}
 }
