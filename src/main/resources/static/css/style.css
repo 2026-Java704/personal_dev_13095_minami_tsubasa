@@ -232,7 +232,7 @@ h2 {
     color: #FFF;
     text-decoration: none;
     text-align: center;
-	border-radius: 10px;
+	border-radius: 0 20px;
 	line-height: 5em;
 }
 .linkButton:hover{

@@ -13,8 +13,7 @@
 	<header>
 		<h1>
 			<div th:replace="~{commonIcon}"></div>
-			日別利用実績
-		</h1>
+			日別利用実績</h1>
 		<!--タブを作る-->
 		<div th:replace="~{tabContainer}"></div>
 	</header>
@@ -116,16 +115,17 @@
 				  }
 				  
 				  const RECIPT_LINK = document.getElementById('reciptView');
-				  const IS_RECIPUT_LINK = document.getElementById('isRecipt');
+				  const IS_RECIPT_LINK = document.getElementById('isRecipt');
 				  const RECIPT_FILE = document.getElementById('reciptData');
 				  
+				  IS_RECIPT_LINK.style.visibility = 'hidden';
+
 				  RECIPT_FILE.value = GET_IMAGE.split('/').pop();
 				  
-				  if (GET_IMAGE == null) {
-					IS_RECIPT_LINK.disabled = false;		
-				  } else {
+				  if (GET_IMAGE != null) {
+					
 					RECIPT_LINK.value = GET_IMAGE;
-					IS_RECIPT_LINK.disabled = true;
+					IS_RECIPT_LINK.style.visibility = 'visible';
 					
 				  }
 			    }
