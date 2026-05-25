@@ -13,7 +13,7 @@
 	<main>
 		<div class="viewContainer">
 			<p class="status">アカウント情報を更新します</p>
-
+			<br> <span th:text="${inputErr}" style="color: red"></span>
 			<form action="/account/update" method="post">
 				<table border="1">
 					<tr>
@@ -31,6 +31,24 @@
 						<th>E-mail</th>
 						<td>
 							<input type="text" name="userEmail" th:value="${userEmail}">
+						</td>
+					</tr>
+					<tr>
+						<th>現在のパスワード</th>
+						<td>
+							<input type="text" name="currentPassword" th:value="${userCurrentPW}">
+						</td>
+					</tr>
+					<tr>
+						<th>新しいパスワード</th>
+						<td>
+							<input type="text" name="newPassword" th:value="${userNewPW}">
+						</td>
+					</tr>
+					<tr>
+						<th>新しいパスワード</th>
+						<td>
+							<input type="text" name="newConfilm" th:value="${userNewConfilm}">
 						</td>
 					</tr>
 				</table>

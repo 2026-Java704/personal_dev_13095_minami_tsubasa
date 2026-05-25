@@ -174,17 +174,52 @@ public class UserController {
 	public String accountSet(
 			@RequestParam(defaultValue = "") String userName,
 			@RequestParam(defaultValue = "") String userEmail,
+			@RequestParam(defaultValue = "") String currentPassword,
+			@RequestParam(defaultValue = "") String newPassword,
+			@RequestParam(defaultValue = "") String newConfilm,
 			Model model) {
 
 		Integer userId = account.getId();
 
 		User user = userRepository.findById(userId).get();
 
-		user.setUserName(userName);
-		user.setUserEmail(userEmail);
+		// 現在のパスワードのハッシュを取得
+		String currentHashPW = user.getPassword();
 
-		userRepository.save(user);
+		// ここで新規のPWと確認用が一致するか事前に確認
+		if (!(newPassword.equals(newConfilm))) {
+			model.addAttribute("inputErr", "パスワードが確認と一致しません");
 
-		return "redirect:/items";
+			// フォームに値を保持してあげるコーナー
+			model.addAttribute("userId", userId);
+			model.addAttribute("userName", userName);
+			model.addAttribute("userEmail", userEmail);
+
+			return "accountInfo";
+		}
+
+		// 入力値をマッチで自動ハッシュして一致するか検証
+		// 一致なら新規のPWをハッシュかして保存
+		if (passwordEncoder.matches(currentPassword, currentHashPW)) {
+
+			user.setUserName(userName);
+			user.setUserEmail(userEmail);
+
+			// 全ての条件がそろったらハッシュを行う
+			String newHashedPW = passwordEncoder.encode(newPassword);
+			user.setPassword(newHashedPW);
+
+			userRepository.save(user);
+
+			return "redirect:/items";
+		} else {
+			// 情報が一致しないためとどめる。
+			model.addAttribute("inputErr", "現在のパスワードが一致しません");
+			// フォームに値を保持してあげるコーナー
+			model.addAttribute("userId", userId);
+			model.addAttribute("userName", userName);
+			model.addAttribute("userEmail", userEmail);
+			return "accountInfo";
+		}
 	}
 }
