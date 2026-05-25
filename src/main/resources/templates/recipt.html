@@ -7,7 +7,9 @@
 </head>
 <body>
 	<header>
-		<h1>レシート：[[${reciptName}]]</h1>
+		<h1>
+			<div th:replace="~{commonIcon}"></div>
+			レシート照会</h1>
 		<!--タブを作る-->
 		<div th:replace="~{tabContainer}"></div>
 	</header>

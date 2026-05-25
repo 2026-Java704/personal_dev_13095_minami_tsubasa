@@ -7,7 +7,10 @@
 </head>
 <body>
 	<header>
-		<h1>計上画面</h1>
+		<h1>
+			<div th:replace="~{commonIcon}"></div>
+			計上画面
+		</h1>
 		<!--タブを作る-->
 		<div th:replace="~{tabContainer}"></div>
 	</header>
@@ -56,7 +59,8 @@
 					<tr>
 						<th>領収書</th>
 						<td>
-							<input type="file" name="imageFile" class="file-button">
+							<input type="file" name="imageFile" class="file-button"
+							accept=".jpg, .jpeg, .png .tiff">
 						</td>
 					</tr>	
 				</table>

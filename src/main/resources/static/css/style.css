@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&family=Zen+Maru+Gothic&display=swap');
 /* 全体 */
 body {
-	background-color: rgb(215, 196, 71); /* 背景色  */
+	background-color: rgb(128, 128, 255); /* 背景色  */
 	text-align: center; /* 中央寄せ */
     min-width: 900px; /* 最小幅 */
 	margin: 0;
-	font-family: "Zen Maru Gothic", sans-serif;
+	font-family: "M PLUS 1p", sans-serif;
 	font-weight: 600;
-	color: rgb(108, 63, 0);
+	font-style: normal;
+	color: rgb(0, 0, 64);
 }
 /* ヘッダー、ナビゲーションメニュー、フッター */
 header {
@@ -16,21 +16,21 @@ header {
 	top: 0;
 	left: 0;
 	width: 100%;
-	background-color: rgb(0, 85, 40); /* 背景色 */
-	color: rgb(255, 255, 128); /* 文字色 */
+	background-color: rgb(255, 255, 255); /* 背景色 */
+	color: rgb(0, 0, 64); /* 文字色 */
 	padding-top: 2px; /* 内側余白(上) */
 	z-index: 1000;
-	
 }
 /* ヘッダー、ナビゲーション内リンク */
 header a {
-	color: #ffffff;
+	color: rgb(0, 0, 64);
 }
 /* ヘッダー内見出し */
 header h1 {
 	font-size: 3.0em;
 	margin: 5px auto;
 	font-style: italic;
+	font-weight: 900 !important;
 }
 /* 仕切り線 */
 hr {
@@ -76,7 +76,7 @@ button:hover {
 	display: inline-block;
     width: 10em;
     padding: 10px 24px;
-    margin: 2em auto;
+    margin: 5em auto;
     background: rgb(255, 128, 0);
     color: #FFF;
     text-decoration: none;
@@ -94,7 +94,9 @@ button:hover {
 .tabContainer {
 	margin-bottom: 0;
 	width: 100%;
-	background-color:rgb(0, 47, 16);
+	background-color:rgb(225, 213, 255);
+	box-shadow: 0px 8px 15px rgb(0, 0, 85);
+	
 }
 
 .linkNav {
@@ -103,22 +105,22 @@ button:hover {
 
     padding: 5px 24px;
     margin: 0.5em auto;
-    background: rgb(0, 64, 31);
-    color: #FFF;
+    background: rgb(184, 150, 254);
+    color: rgb(0, 0, 64);
     text-decoration: none;
     text-align: center;
 	border-radius: 10px;
 }
 
 .linkNav:hover{
-    background: rgb(0, 128, 64);
+    background: rgb(128, 128, 192);
 }
 
 meter {
   /* 全体のサイズと見た目のリセット */
   width: 100%;
-  max-width: 320px;
-  height: 4em;
+  max-width: 70%;
+  height: 5em;
   border: none;
 }
 
@@ -200,22 +202,33 @@ h2 {
 }
 
 #balance {
+	font-size: 1.8em;
+	font-weight: bolder;
 	color: rgb(0, 0, 255);
 }
 
 #income {
+	font-size: 1.5em;
+	font-weight: bolder;
 	color: rgb(0, 180, 30);
 }
 
 #maxPrice, #maxItem {
+	font-size: 1.5em;
+	font-weight: bolder;
 	color: rgb(255, 0, 35);
+}
+
+.buttonContainer {
+	margin: 0 auto;
+	width: 	70%;
 }
 
 .linkButton{
     width: 50px;
     padding: 10px 36px;
     margin: 10px;
-    background: #569f3c;
+    background: rgb(255, 128, 0);
     color: #FFF;
     text-decoration: none;
     text-align: center;
@@ -223,7 +236,7 @@ h2 {
 	line-height: 5em;
 }
 .linkButton:hover{
-    background: #225f0d;
+    background: rgb(255, 0, 0);
 }
 
 .linkAdd {
@@ -257,6 +270,7 @@ h2 {
 	padding-top: 2em;
 	padding-bottom: 3em;
 	align-items: center;
+	box-shadow: 10px 10px 15px rgb(0, 113, 215);
 }
 
 

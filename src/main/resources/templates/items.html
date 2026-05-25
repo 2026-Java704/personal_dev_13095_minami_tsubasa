@@ -7,7 +7,10 @@
 </head>
 <body>
 	<header>
-		<h1>計上履歴照会</h1>
+		<h1>
+			<div th:replace="~{commonIcon}"></div>
+			計上履歴照会
+		</h1>
 		<!--タブを作る-->
 		<div th:replace="~{tabContainer}"></div>
 	</header>
@@ -32,9 +35,9 @@
 				<span id="maxItem">（[[${maxItem}]]）</span>
 			</h2>
 			
-			<meter class="custom-meter" th:attr="value=${totalBalance}, min=0, max=${totalIncome}, low=${totalIncome * 0.3}, high=${totalIncome * 0.5}, optimum=${totalIncome * 0.7}" 
+			<p>Empty（0%）<meter class="custom-meter" th:attr="value=${totalBalance}, min=0, max=${totalIncome}, low=${totalIncome * 0.3}, high=${totalIncome * 0.5}, optimum=${totalIncome * 0.7}" 
 			       th:text="${totalBalance} + '円'">
-			</meter>
+			</meter> Full（100%）</p>
 			<p th:text="${alert}" class="alertView"></p>
 			<a href="/items/add" class="linkAdd">新規計上</a>
 			<a href="/items/detail" class="linkAdd">日別詳細</a>
@@ -48,20 +51,22 @@
 					<td class="genrePriceView" th:text="${#numbers.formatInteger(genre.Value, 3, 'COMMA')}"></td>
 					<td>
 						<meter class="dashBoadMeter" th:attr="value=${genre.value}, min=0, max=${totalIncome}, low=${totalIncome * 0.4}, high=${totalIncome * 0.6}, optimum=${totalIncome * 0.8}" 
-						       th:text="${genre.value} + '円'">
-						</meter>
+						       th:text="${genre.value} + '円'"></meter>
 					</td>
 				</tr>
 			</table>
 		</div>
 		
 		<div id="record-list" class="viewContainer">
-			<a href="/items" class="linkButton">全項目</a>
+			<div class="buttonContainer">
+				<h2>実績の履歴</h2>
+				<a href="/items" class="linkButton">全項目</a>
 				<a th:each="genre:${genres}"
 				   th:href="@{/items(genreId=${genre.id})}"
 				   th:text="${genre.genreName}"
 				   style="margin-right: 5px;" class="linkButton">
 			 	</a>
+			</div>
 			<br>
 			<table border="1">
 				<tr>
@@ -78,7 +83,7 @@
 					<td th:text="${item.addDate}"></td>
 					<td th:text="${item.itemName}"></td>
 					<td th:text="${item.genre.genreName}"></td>
-					<td th:text="${item.price}"></td>
+					<td th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')}"></td>
 					<td th:text="${item.comment}"></td>
 					<td>
 						<form th:action="@{/items/{itemId}/edit(itemId=${item.id})}" method="get">
