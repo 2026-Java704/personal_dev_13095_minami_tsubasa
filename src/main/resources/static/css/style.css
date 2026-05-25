@@ -21,10 +21,7 @@ header {
 	padding-top: 2px; /* 内側余白(上) */
 	z-index: 1000;
 }
-/* ヘッダー、ナビゲーション内リンク */
-header a {
-	color: rgb(0, 0, 64);
-}
+
 /* ヘッダー内見出し */
 header h1 {
 	font-size: 3.0em;
@@ -225,6 +222,7 @@ h2 {
 }
 
 .linkButton{
+	display: float;
     width: 50px;
     padding: 10px 36px;
     margin: 10px;

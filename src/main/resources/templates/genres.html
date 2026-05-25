@@ -30,7 +30,6 @@
 					<th>入金科目</th>
 					<th>備考</th>
 					<th>更新</th>
-					<th>削除</th>
 				</tr>
 				<tr th:each="genre:${genres}">
 					<!--表の商品へのリンク付けはThymeleafのタグ外書き込みで対応可能-->
@@ -41,11 +40,6 @@
 					<td>
 						<form th:action="@{/genres/{genreId}/edit(genreId=${genre.id})}" method="get">
 							<button>更新</button>
-						</form>
-					</td>
-					<td>
-						<form th:action="@{/genre/{genreId}/delete(genreId=${genre.id})}" method="post">
-							<button>削除</button>
 						</form>
 					</td>
 				</tr>
