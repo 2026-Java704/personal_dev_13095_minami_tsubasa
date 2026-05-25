@@ -43,6 +43,11 @@ public class genreController {
 	@GetMapping("/genres")
 	public String genre(Model model) {
 
+		// ログインを経由しておらずセッションが空の場合
+		if (account.getId() == null) {
+			return "redirect:/login";
+		}
+
 		List<Genre> genreList = genreRepository.findAll();
 
 		model.addAttribute("genres", genreList);
@@ -52,6 +57,11 @@ public class genreController {
 
 	@GetMapping("/genres/add")
 	public String genreAdd(Model model) {
+
+		// ログインを経由しておらずセッションが空の場合
+		if (account.getId() == null) {
+			return "redirect:/login";
+		}
 
 		model.addAttribute("userName", account.getName());
 		return "addGenres";
@@ -80,6 +90,11 @@ public class genreController {
 	// 更新画面表示
 	@GetMapping("/genres/{id}/edit")
 	public String genreEdit(@PathVariable Integer id, Model model) {
+
+		// ログインを経由しておらずセッションが空の場合
+		if (account.getId() == null) {
+			return "redirect:/login";
+		}
 		Genre genre = genreRepository.findById(id).get();
 		model.addAttribute("genres", genre);
 

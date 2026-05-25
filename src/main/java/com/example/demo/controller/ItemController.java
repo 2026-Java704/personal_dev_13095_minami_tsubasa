@@ -73,11 +73,16 @@ public class ItemController {
 		// 最大値を取得するための式
 		List<Item> itemMax = itemRepository.findByUserIdOrderByPriceAsc(account.getId());
 
-		// 最大出費
-		Integer maxPrice = itemMax.get(0).getPrice();
-		String maxItem = itemMax.get(0).getItemName();
-		model.addAttribute("maxPrice", maxPrice);
-		model.addAttribute("maxItem", maxItem);
+		if (!(itemMax.isEmpty())) {
+			// 最大出費
+			Integer maxPrice = itemMax.get(0).getPrice();
+			String maxItem = itemMax.get(0).getItemName();
+			model.addAttribute("maxPrice", maxPrice);
+			model.addAttribute("maxItem", maxItem);
+		} else {
+			model.addAttribute("maxPrice", 0);
+			model.addAttribute("maxItem", "計上なし");
+		}
 
 		// 検索（期間の収支・残高を出すために使用）
 		itemDate = itemRepository.findByUserIdAndAddDateBetween(account.getId(), initDate, finalDate);
@@ -147,12 +152,13 @@ public class ItemController {
 
 	@GetMapping("/items")
 	public String index(
-
-			/*
-			 * 5月22日　セッションによる名前表示とログアウトボタンを実装
-			 * */
 			@RequestParam(defaultValue = "") Integer genreId,
 			Model model) {
+
+		// ログインを経由しておらずセッションが空の場合
+		if (account.getId() == null) {
+			return "redirect:/login";
+		}
 
 		// 全カテゴリー一覧を取得
 		List<Genre> genreList = genreRepository.findAll();
@@ -197,6 +203,11 @@ public class ItemController {
 
 	@GetMapping("/items/add")
 	public String add(Model model) {
+
+		// ログインを経由しておらずセッションが空の場合
+		if (account.getId() == null) {
+			return "redirect:/login";
+		}
 
 		// プルダウンで科目一覧を表示するためのコード
 		List<Genre> genreList = genreRepository.findAll();
@@ -306,6 +317,11 @@ public class ItemController {
 	public String edit(@PathVariable Integer id, Model model) {
 		Item item = itemRepository.findById(id).get();
 		model.addAttribute("item", item);
+
+		// ログインを経由しておらずセッションが空の場合
+		if (account.getId() == null) {
+			return "redirect:/login";
+		}
 
 		// 更新画面でもプルダウンでカテゴリIDを選べるようにするため
 		List<Genre> genreList = genreRepository.findAll();

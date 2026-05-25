@@ -44,7 +44,8 @@
 				
 
 				<form action="/items/recipt" method="get">
-					<input type="hidden" id="reciptView" name="reciptURL">
+					<input type="text" id="reciptView" name="reciptURL">
+					<input type="text" id="reciptData" name="reciptName">
 					<button id="isRecipt">表示</button>
 				</form> 
 			</p>
@@ -113,13 +114,16 @@
 				  
 				  const RECIPT_LINK = document.getElementById('reciptView');
 				  const IS_RECIPUT_LINK = document.getElementById('isRecipt');
+				  const RECIPT_FILE = document.getElementById('reciptData');
+				  
+				  RECIPT_FILE.value = GET_IMAGE.split('/').pop();
 				  
 				  if (GET_IMAGE == null) {
-
 					IS_RECIPT_LINK.disabled = false;		
 				  } else {
 					RECIPT_LINK.value = GET_IMAGE;
 					IS_RECIPT_LINK.disabled = true;
+					
 				  }
 			    }
 			});

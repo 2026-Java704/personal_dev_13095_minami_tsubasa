@@ -40,6 +40,11 @@ public class dateController {
 	@GetMapping("/items/detail")
 	public String calender(Model model) {
 
+		// ログインを経由しておらずセッションが空の場合
+		if (account.getId() == null) {
+			return "redirect:/login";
+		}
+
 		List<Item> itemList = itemRepository.findByUserId(account.getId());
 		model.addAttribute("items", itemList);
 
@@ -50,9 +55,16 @@ public class dateController {
 	@GetMapping("/items/recipt")
 	public String genre(
 			@RequestParam(defaultValue = "") String reciptURL,
+			@RequestParam(defaultValue = "") String reciptName,
 			Model model) {
 
+		// ログインを経由しておらずセッションが空の場合
+		if (account.getId() == null) {
+			return "redirect:/login";
+		}
+
 		model.addAttribute("reciptURL", reciptURL);
+		model.addAttribute("reciptName", reciptName);
 		return "recipt";
 	}
 
