@@ -6,6 +6,8 @@ import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,10 @@ import com.example.demo.repository.UserRepository;
 
 @Controller
 public class UserController {
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	// セッションに必要な初期化
 	private final UserRepository userRepository;
 	private final HttpSession session;
@@ -30,10 +36,12 @@ public class UserController {
 	*/
 	public UserController(HttpSession session,
 			UserRepository userRepository,
-			Account account) {
+			Account account,
+			PasswordEncoder passwordEncoder) {
 		this.session = session;
 		this.account = account;
 		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	// ログイン画面を表示
@@ -66,10 +74,16 @@ public class UserController {
 			// ログインHTMLのthymeleafの${message}へ打ち変えs
 			model.addAttribute("message", "メールアドレスを入力してください");
 			return "login";
+			// パスワードがハッシュ化されたものとマッチするか検証
 		}
 
-		List<User> findAccount = userRepository.findByEmailAndPasswordEquals(email, password);
-		if (findAccount.size() == 1) {
+		List<User> findAccount = userRepository.findByEmailEquals(email);
+		// mapを使って、findEmailでヒットした０行目のメールアドレスをキーに
+		// ハッシュ化されたPWを取得
+		String savedPW = findAccount.get(0).getPassword();
+
+		//		List<User> findAccount = userRepository.findByEmailAndPasswordEquals(email, password);
+		if (passwordEncoder.matches(password, savedPW)) {
 
 			// セッション管理されたアカウント情報に名前をセット
 			// 検索されたリストは１件なので、０番目をとる。
@@ -95,8 +109,6 @@ public class UserController {
 			@RequestParam(defaultValue = "") String password,
 			@RequestParam(defaultValue = "") String passwordConfilm,
 			Model model) {
-
-		User user = new User(name, email, password);
 
 		// エラーの情報を格納する
 		List<String> accountErr = new ArrayList();
@@ -135,6 +147,10 @@ public class UserController {
 			model.addAttribute("accountErr", accountErr);
 			return "userForm";
 		}
+
+		// 全てを突破したら…
+		String hashedPW = passwordEncoder.encode(password);
+		User user = new User(name, email, hashedPW);
 
 		userRepository.save(user);
 		// リダイレクト
