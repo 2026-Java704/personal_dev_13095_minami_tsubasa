@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&family=Zen+Maru+Gothic&display=swap');
 /* 全体 */
 body {
-	background-color: rgb(128, 128, 255); /* 背景色  */
+	background-color: rgb(167, 174, 216); /* 背景色  */
 	text-align: center; /* 中央寄せ */
     min-width: 900px; /* 最小幅 */
 	margin: 0;
@@ -16,14 +16,21 @@ header {
 	top: 0;
 	left: 0;
 	width: 100%;
-	background-color: rgb(255, 255, 255); /* 背景色 */
+	background: linear-gradient(rgb(255, 255, 255), rgb(207, 198, 255), rgb(175, 162, 255));
 	color: rgb(0, 0, 64); /* 文字色 */
 	padding-top: 2px; /* 内側余白(上) */
 	z-index: 1000;
+	box-shadow: 0px 8px 8px rgb(101, 103, 194);
 }
 
 header img {
 	margin-top: 0.2em;
+	
+	filter: 
+	    drop-shadow(3px 0px 0px rgb(255, 255, 255)) 
+	    drop-shadow(-3px 0px 0px rgb(255, 255, 255)) 
+	    drop-shadow(0px 2px 0px rgb(255, 255, 255)) 
+	    drop-shadow(0px -2px 0px rgb(255, 255, 255));
 }
 
 /* ヘッダー内見出し */
@@ -39,8 +46,8 @@ hr {
 }
 /* メイン */
 main {
-	margin-top: 8em;
-	padding: 20px;
+	margin-top: 12em;
+	
 }
 /* 表線 */
 table, th, td {
@@ -96,7 +103,7 @@ button:hover {
 	margin-bottom: 0;
 	width: 100%;
 	background-color:rgb(225, 213, 255);
-	box-shadow: 0px 8px 15px rgb(0, 0, 85);
+	box-shadow: 0px 8px 10px rgb(107, 109, 197);
 	
 }
 
@@ -114,7 +121,7 @@ button:hover {
 }
 
 .linkNav:hover{
-    background: rgb(128, 128, 192);
+    background: rgb(255, 255, 128);
 }
 
 meter {
@@ -269,14 +276,14 @@ h2 {
 
 /*各カードの要素を作る*/
 .viewContainer {
-	scroll-margin-top: 10em;
+	scroll-margin-top: 12em;
 	background-color: rgb(255, 253, 242);
 	border-radius: 15px;
 	margin: 3em 10em 0 10em; 
 	padding-top: 2em;
 	padding-bottom: 3em;
 	align-items: center;
-	box-shadow: 10px 10px 15px rgb(0, 113, 215);
+	box-shadow: 10px 10px 15px rgb(121, 108, 196);
 }
 
 
@@ -403,5 +410,17 @@ input, select {
 
 .genrePriceView {
 	font-size: 2.5em;
+}
+
+.footerBox {
+	height:100px;
+	margin-top: 4em;
+	bottom:0;
+  background-color: rgb(94, 72, 176);
+}
+
+.footerText {
+	font-size: 2em;
+	color:#FEFEFE;
 }
 
