@@ -77,7 +77,19 @@ public class UserController {
 			// パスワードがハッシュ化されたものとマッチするか検証
 		}
 
+		boolean isEmail = userRepository.existsByEmail(email);
+
+		if (!isEmail) {
+			model.addAttribute("message", "メールアドレスまたはパスワードが違います");
+			return "login";
+		}
+
 		List<User> findAccount = userRepository.findByEmailEquals(email);
+
+		if (!(email.equals(findAccount.get(0).getEmail()))) {
+			model.addAttribute("message", "メールアドレスまたはパスワードが違います");
+			return "login";
+		}
 		// mapを使って、findEmailでヒットした０行目のメールアドレスをキーに
 		// ハッシュ化されたPWを取得
 		String savedPW = findAccount.get(0).getPassword();
@@ -197,13 +209,16 @@ public class UserController {
 
 			return "accountInfo";
 		}
-
 		// 入力値をマッチで自動ハッシュして一致するか検証
 		// 一致なら新規のPWをハッシュかして保存
-		if (passwordEncoder.matches(currentPassword, currentHashPW)) {
+		if (passwordEncoder.matches(currentPassword, currentHashPW) &&
+				!("".equals(newPassword)) && !("".equals(newConfilm))) {
 
 			user.setUserName(userName);
 			user.setUserEmail(userEmail);
+
+			// 表示を変える
+			account.setName(userName);
 
 			// 全ての条件がそろったらハッシュを行う
 			String newHashedPW = passwordEncoder.encode(newPassword);
@@ -212,14 +227,25 @@ public class UserController {
 			userRepository.save(user);
 
 			return "redirect:/items";
+			// 空欄にされた場合は現在のパスワードで更新する。
+		} else if (passwordEncoder.matches(currentPassword, currentHashPW) &&
+				("".equals(newPassword)) && ("".equals(newConfilm))) {
+			user.setUserName(userName);
+			user.setUserEmail(userEmail);
+			// 表示を変える
+			account.setName(userName);
+			userRepository.save(user);
+			return "redirect:/items";
 		} else {
 			// 情報が一致しないためとどめる。
-			model.addAttribute("inputErr", "現在のパスワードが一致しません");
+			model.addAttribute("inputErr",
+					"現在のパスワードが一致しません");
 			// フォームに値を保持してあげるコーナー
 			model.addAttribute("userId", userId);
 			model.addAttribute("userName", userName);
 			model.addAttribute("userEmail", userEmail);
 			return "accountInfo";
+
 		}
 	}
 }

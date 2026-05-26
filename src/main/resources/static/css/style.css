@@ -22,10 +22,14 @@ header {
 	z-index: 1000;
 }
 
+header img {
+	margin-top: 0.2em;
+}
+
 /* ヘッダー内見出し */
 header h1 {
 	font-size: 3.0em;
-	margin: 5px auto;
+	margin: 0 auto;
 	font-style: italic;
 	font-weight: 900 !important;
 }
@@ -218,20 +222,24 @@ h2 {
 
 .buttonContainer {
 	margin: 0 auto;
-	width: 	70%;
+	width: 	90%;
 }
 
 .linkButton{
-	display: float;
-    width: 50px;
-    padding: 10px 36px;
-    margin: 10px;
+	/*autoにすると文字数に応じて
+	きれいに幅が決まる
+	画面上でボタン単位で改行される。
+	*/
+    width: auto;
+	height: 3em;
+    padding: 0 0.8em;
+    margin: 0.4em;
     background: rgb(255, 128, 0);
     color: #FFF;
     text-decoration: none;
-    text-align: center;
+	font-size: 1.5em;
 	border-radius: 0 20px;
-	line-height: 5em;
+
 }
 .linkButton:hover{
     background: rgb(255, 0, 0);

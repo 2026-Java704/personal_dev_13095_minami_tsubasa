@@ -26,9 +26,7 @@ public class SecurityConfig {
 						// 今回は全てのリクエストを許可する。
 						// CSRP保護下に置いた構造設計とならなかったことは反省点
 						.requestMatchers("/**").permitAll()
-						.anyRequest().permitAll()
-				// デフォルトのフォームログインなどを有効にする場合
-				);
+						.anyRequest().permitAll());
 
 		return http.build();
 	}
